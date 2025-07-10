@@ -38,6 +38,12 @@
   h6 {
     @apply font-heading;
   }
+
+  /* Ranch-style headings for horse theme */
+  .ranch-heading {
+    @apply font-ranch font-black uppercase tracking-wider;
+    text-shadow: 2px 2px 0px rgba(133, 77, 14, 0.8);
+  }
 }
 
 body {

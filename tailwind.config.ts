@@ -92,6 +92,7 @@ const config: Config = {
       fontFamily: {
         heading: ["Matemasie-Regular", "serif", "sans-serif"],
         body: ["Quicksand-VariableFont_wght", "sans-serif"],
+        ranch: ["Impact", "Arial Black", "Helvetica", "sans-serif"], // New ranch-style font
       },
     },
   },

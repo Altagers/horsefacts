@@ -100,13 +100,31 @@ export default function SharePage({ params }: Props) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-amber-200 via-orange-200 to-yellow-300 p-8 text-center">
         <div className="text-6xl mb-4 animate-bounce">🤠</div>
-        <h1 className="text-4xl font-heading text-amber-900 mb-6 font-bold">Whoa there, partner!</h1>
+        <h1 className="text-4xl ranch-heading text-amber-900 mb-6">Whoa there, partner!</h1>
         <p className="font-body text-xl text-amber-800 mb-8">This horse fact galloped away! 🐎💨</p>
         <a href={appBaseUrl}>
-          <HorseButton className="text-xl">🎯 Discover Horse Facts!</HorseButton>
+          <HorseButton className="text-xl ranch-heading">🎯 Discover Horse Facts!</HorseButton>
         </a>
         <div className="mt-6 text-sm text-amber-700">
-          Made by @altagers.eth with @sohey help • Powered by MiniKit 🚀
+          Made by{" "}
+          <a
+            href="https://farcaster.xyz/altagers.eth"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-amber-800 hover:text-amber-900 underline font-semibold transition-colors duration-200"
+          >
+            @altagers.eth
+          </a>{" "}
+          with{" "}
+          <a
+            href="https://farcaster.xyz/sohey"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-amber-800 hover:text-amber-900 underline font-semibold transition-colors duration-200"
+          >
+            @sohey
+          </a>{" "}
+          help • Powered by MiniKit 🚀
         </div>
       </div>
     )
@@ -120,9 +138,7 @@ export default function SharePage({ params }: Props) {
         <div className="absolute -top-4 -right-4 text-4xl animate-bounce">🤯</div>
         <div className="absolute -top-4 -left-4 text-4xl animate-pulse">🐴</div>
 
-        <h2 className="font-heading text-amber-900 text-3xl mb-4 font-bold">
-          Holy horseshoes! Someone shared this epic fact:
-        </h2>
+        <h2 className="ranch-heading text-amber-900 text-3xl mb-4">Holy horseshoes! Someone shared this epic fact:</h2>
 
         <img
           src={ogImageUrl || "/placeholder.svg"}
@@ -135,13 +151,31 @@ export default function SharePage({ params }: Props) {
         <p className="font-body text-xl text-amber-800 mb-8">🎯 Horse Fact #{factId} is ready to blow your mind! 🤯</p>
 
         <a href={appBaseUrl}>
-          <HorseButton className="text-xl transform hover:scale-105 transition-all duration-200">
+          <HorseButton className="text-xl transform hover:scale-105 transition-all duration-200 ranch-heading">
             🚀 Discover More Epic Facts!
           </HorseButton>
         </a>
 
         <div className="mt-6 text-xs text-amber-700 italic">
-          Made by @altagers.eth with @sohey help • Powered by MiniKit 🚀
+          Made by{" "}
+          <a
+            href="https://farcaster.xyz/altagers.eth"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-amber-800 hover:text-amber-900 underline font-semibold transition-colors duration-200"
+          >
+            @altagers.eth
+          </a>{" "}
+          with{" "}
+          <a
+            href="https://farcaster.xyz/sohey"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-amber-800 hover:text-amber-900 underline font-semibold transition-colors duration-200"
+          >
+            @sohey
+          </a>{" "}
+          help • Powered by MiniKit 🚀
         </div>
       </div>
 

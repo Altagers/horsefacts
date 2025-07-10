@@ -45,7 +45,7 @@ export default function Home() {
       {/* Themed Header */}
       <header className="relative z-10 w-full max-w-xl mb-8 flex flex-col sm:flex-row justify-between items-center gap-4 p-6 bg-amber-100 border-[4px] border-amber-800 rounded-3xl shadow-[6px_6px_0px_0px_rgba(133,77,14,1)]">
         <div className="text-center sm:text-left">
-          <h1 className="font-heading text-4xl text-amber-900 leading-tight font-bold">Horse Facts & Pics</h1>
+          <h1 className="ranch-heading text-4xl text-amber-900 leading-tight">Horse Facts & Pics</h1>
           <p className="font-body text-lg text-amber-700 font-medium">Discover amazing horse facts!</p>
         </div>
       </header>

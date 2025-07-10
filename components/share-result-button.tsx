@@ -58,7 +58,7 @@ Made by @altagers.eth with @sohey help, powered by MiniKit! 🚀`
       <HorseButton
         onClick={handleShare}
         disabled={status === "loading"}
-        className="w-full text-xl transform hover:scale-105 transition-all duration-200"
+        className="w-full text-xl transform hover:scale-105 transition-all duration-200 ranch-heading"
         sparkles
       >
         {status === "loading" ? (
@@ -80,6 +80,27 @@ Made by @altagers.eth with @sohey help, powered by MiniKit! 🚀`
       )}
       <div className="text-xs text-amber-600 text-center font-body italic">
         "Sharing is caring... and hilarious! 😄"
+      </div>
+      <div className="text-xs text-amber-600 font-body text-center">
+        Made by{" "}
+        <a
+          href="https://farcaster.xyz/altagers.eth"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-amber-800 hover:text-amber-900 underline font-semibold transition-colors duration-200"
+        >
+          @altagers.eth
+        </a>{" "}
+        with{" "}
+        <a
+          href="https://farcaster.xyz/sohey"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-amber-800 hover:text-amber-900 underline font-semibold transition-colors duration-200"
+        >
+          @sohey
+        </a>{" "}
+        help • Powered by MiniKit 🚀
       </div>
     </div>
   )
