@@ -58,7 +58,7 @@ Made by @altagers.eth with @sohey help, powered by MiniKit! 🚀`
       <HorseButton
         onClick={handleShare}
         disabled={status === "loading"}
-        className="w-full text-xl transform hover:scale-105 transition-all duration-200 ranch-heading"
+        className="w-full text-xl transform hover:scale-105 transition-all duration-200"
         sparkles
       >
         {status === "loading" ? (

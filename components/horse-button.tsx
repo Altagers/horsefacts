@@ -10,7 +10,7 @@ interface HorseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
 
 export function HorseButton({ children, className = "", sparkles = false, ...props }: HorseButtonProps) {
   const baseClasses = `
-    font-heading text-2xl font-bold
+    western-button-text text-xl
     px-8 py-3 rounded-2xl border-4 border-amber-800
     shadow-[4px_4px_0px_0px_rgba(133,77,14,1)]
     transition-all duration-150 ease-in-out

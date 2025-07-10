@@ -35,8 +35,6 @@ export function HorseLoversSection({ isOpen, onClose }: HorseLoversProps) {
 
         <div className="space-y-4">
           <div className="bg-white/80 p-4 rounded-2xl border-2 border-red-300 text-center">
-            <p className="font-body text-sm text-red-700 mb-3">Follow amazing horse content creators! 🐴✨</p>
-
             <div className="flex flex-col gap-3">
               <a
                 href="https://farcaster.xyz/horsefacts.eth"

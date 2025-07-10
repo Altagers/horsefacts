@@ -39,10 +39,25 @@
     @apply font-heading;
   }
 
-  /* Ranch-style headings for horse theme */
+  /* Western/Ranch-style headings for horse theme */
   .ranch-heading {
     @apply font-ranch font-black uppercase tracking-wider;
-    text-shadow: 2px 2px 0px rgba(133, 77, 14, 0.8);
+    text-shadow: 3px 3px 0px rgba(92, 51, 23, 0.8), -1px -1px 0px rgba(92, 51, 23, 0.3);
+    letter-spacing: 0.1em;
+  }
+
+  /* Western button text style */
+  .western-button-text {
+    @apply font-ranch font-black uppercase tracking-wider;
+    text-shadow: 2px 2px 0px rgba(92, 51, 23, 0.6), -1px -1px 0px rgba(92, 51, 23, 0.2);
+    letter-spacing: 0.08em;
+  }
+
+  /* Western bold text for emphasis */
+  .western-bold {
+    @apply font-ranch font-black uppercase tracking-wide;
+    text-shadow: 2px 2px 0px rgba(92, 51, 23, 0.5);
+    letter-spacing: 0.05em;
   }
 }
 
