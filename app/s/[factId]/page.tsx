@@ -89,7 +89,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
   }
 }
 
-// Fallback page content
+// Fallback page content with better contrast
 export default function SharePage({ params }: Props) {
   const factIdParam = decodeURIComponent(params.factId)
   const factId = Number.parseInt(factIdParam)
@@ -99,33 +99,44 @@ export default function SharePage({ params }: Props) {
   if (!horseFact) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-amber-200 via-orange-200 to-yellow-300 p-8 text-center">
-        <div className="text-6xl mb-4 animate-bounce">🤠</div>
-        <h1 className="text-4xl ranch-heading text-amber-900 mb-6">Whoa there, partner!</h1>
-        <p className="font-body text-xl text-amber-800 mb-8">This horse fact galloped away! 🐎💨</p>
-        <a href={appBaseUrl}>
-          <HorseButton className="text-xl ranch-heading">🎯 Discover Horse Facts!</HorseButton>
-        </a>
-        <div className="mt-6 text-sm text-amber-700">
-          Made by{" "}
-          <a
-            href="https://farcaster.xyz/altagers.eth"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-amber-800 hover:text-amber-900 underline font-semibold transition-colors duration-200"
-          >
-            @altagers.eth
-          </a>{" "}
-          with{" "}
-          <a
-            href="https://farcaster.xyz/sohey"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-amber-800 hover:text-amber-900 underline font-semibold transition-colors duration-200"
-          >
-            @sohey
-          </a>{" "}
-          help • Powered by MiniKit 🚀
+        <div className="bg-white/95 backdrop-blur-md p-8 rounded-3xl shadow-2xl border-4 border-amber-800 max-w-lg w-full relative">
+          <div className="absolute -top-4 -right-4 text-4xl animate-bounce">🤯</div>
+          <div className="absolute -top-4 -left-4 text-4xl animate-pulse">🐴</div>
+
+          <div className="text-6xl mb-4 animate-bounce">🤠</div>
+          <h1 className="text-4xl ranch-heading mb-6">Whoa there, partner!</h1>
+          <p className="font-body text-xl high-contrast-text mb-8">This horse fact galloped away! 🐎💨</p>
+          <a href={appBaseUrl}>
+            <HorseButton className="text-xl ranch-heading">🎯 Discover Horse Facts!</HorseButton>
+          </a>
+          <div className="mt-6 text-sm bg-amber-100 p-3 rounded-lg border-2 border-amber-600">
+            <span className="high-contrast-text">
+              Made by{" "}
+              <a
+                href="https://farcaster.xyz/altagers.eth"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-amber-900 hover:text-amber-800 underline font-bold transition-colors duration-200"
+              >
+                @altagers.eth
+              </a>{" "}
+              with{" "}
+              <a
+                href="https://farcaster.xyz/sohey"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-amber-900 hover:text-amber-800 underline font-bold transition-colors duration-200"
+              >
+                @sohey
+              </a>{" "}
+              help • Powered by MiniKit 🚀
+            </span>
+          </div>
         </div>
+
+        <p className="font-body text-sm high-contrast-text mt-8 italic">
+          "Neigh-ver a dull moment with horse facts!" 🐎✨
+        </p>
       </div>
     )
   }
@@ -134,21 +145,23 @@ export default function SharePage({ params }: Props) {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-amber-200 via-orange-200 to-yellow-300 p-8 text-center">
-      <div className="bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-2xl border-4 border-amber-800 max-w-lg w-full relative">
+      <div className="bg-white/95 backdrop-blur-md p-8 rounded-3xl shadow-2xl border-4 border-amber-800 max-w-lg w-full relative">
         <div className="absolute -top-4 -right-4 text-4xl animate-bounce">🤯</div>
         <div className="absolute -top-4 -left-4 text-4xl animate-pulse">🐴</div>
 
-        <h2 className="ranch-heading text-amber-900 text-3xl mb-4">Holy horseshoes! Someone shared this epic fact:</h2>
+        <h2 className="ranch-heading text-3xl mb-4">Holy horseshoes! Someone shared this epic fact:</h2>
 
         <img
           src={ogImageUrl || "/placeholder.svg"}
           alt={`Horse Fact #${factId}`}
           width={400}
           height={210}
-          className="rounded-lg shadow-xl border-2 border-amber-800 mx-auto mb-6 hover:scale-105 transition-transform duration-300"
+          className="rounded-lg shadow-xl border-3 border-amber-800 mx-auto mb-6 hover:scale-105 transition-transform duration-300"
         />
 
-        <p className="font-body text-xl text-amber-800 mb-8">🎯 Horse Fact #{factId} is ready to blow your mind! 🤯</p>
+        <p className="font-body text-xl high-contrast-text mb-8">
+          🎯 Horse Fact #{factId} is ready to blow your mind! 🤯
+        </p>
 
         <a href={appBaseUrl}>
           <HorseButton className="text-xl transform hover:scale-105 transition-all duration-200 ranch-heading">
@@ -156,30 +169,34 @@ export default function SharePage({ params }: Props) {
           </HorseButton>
         </a>
 
-        <div className="mt-6 text-xs text-amber-700 italic">
-          Made by{" "}
-          <a
-            href="https://farcaster.xyz/altagers.eth"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-amber-800 hover:text-amber-900 underline font-semibold transition-colors duration-200"
-          >
-            @altagers.eth
-          </a>{" "}
-          with{" "}
-          <a
-            href="https://farcaster.xyz/sohey"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-amber-800 hover:text-amber-900 underline font-semibold transition-colors duration-200"
-          >
-            @sohey
-          </a>{" "}
-          help • Powered by MiniKit 🚀
+        <div className="mt-6 text-xs bg-amber-100 p-3 rounded-lg border-2 border-amber-600">
+          <span className="high-contrast-text">
+            Made by{" "}
+            <a
+              href="https://farcaster.xyz/altagers.eth"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-amber-900 hover:text-amber-800 underline font-bold transition-colors duration-200"
+            >
+              @altagers.eth
+            </a>{" "}
+            with{" "}
+            <a
+              href="https://farcaster.xyz/sohey"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-amber-900 hover:text-amber-800 underline font-bold transition-colors duration-200"
+            >
+              @sohey
+            </a>{" "}
+            help • Powered by MiniKit 🚀
+          </span>
         </div>
       </div>
 
-      <p className="font-body text-sm text-amber-800 mt-8 italic">"Neigh-ver a dull moment with horse facts!" 🐎✨</p>
+      <p className="font-body text-sm high-contrast-text mt-8 italic">
+        "Neigh-ver a dull moment with horse facts!" 🐎✨
+      </p>
     </div>
   )
 }
