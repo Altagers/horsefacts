@@ -22,30 +22,30 @@
 }
 
 :root {
-  --foreground-rgb: 92, 57, 0;
+  --foreground-rgb: 92, 51, 23;
   --background-start-rgb: 210, 180, 140;
   --background-end-rgb: 245, 222, 179;
   --amber-primary: 217, 119, 6;
   --amber-secondary: 245, 158, 11;
   --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
+  --foreground: 240 10% 3.9%;
   --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
+  --card-foreground: 240 10% 3.9%;
   --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
-  --primary: 222.2 47.4% 11.2%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  --muted: 210 40% 96%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 210 40% 96%;
-  --accent-foreground: 222.2 47.4% 11.2%;
+  --popover-foreground: 240 10% 3.9%;
+  --primary: 240 9% 9%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 240 4.8% 95.9%;
+  --secondary-foreground: 240 5.9% 10%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --accent: 240 4.8% 95.9%;
+  --accent-foreground: 240 5.9% 10%;
   --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 222.2 84% 4.9%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --ring: 240 10% 3.9%;
   --chart-1: 12 76% 61%;
   --chart-2: 173 58% 39%;
   --chart-3: 197 37% 24%;
@@ -55,25 +55,25 @@
 }
 
 .dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 210 40% 98%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 240 5.9% 10%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
   --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 212.7 26.8% 83.9%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 240 4.9% 83.9%;
   --chart-1: 220 70% 50%;
   --chart-2: 160 60% 45%;
   --chart-3: 30 80% 55%;
@@ -82,11 +82,8 @@
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
   body {
-    @apply bg-background text-foreground;
+    @apply font-body text-foreground;
     font-family: "Inter", "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   }
 
@@ -103,14 +100,9 @@
   .ranch-heading {
     @apply font-heading font-black uppercase tracking-wider text-amber-950;
     font-family: "Inter", "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-    font-weight: 900;
-    text-shadow:
-      2px 2px 0px rgba(255, 255, 255, 0.8), -1px -1px 0px rgba(0, 0, 0, 0.3), 1px -1px 0px rgba(0, 0, 0, 0.3), -1px 1px 0px rgba(
-        0,
-        0,
-        0,
-        0.3
-      ), 1px 1px 0px rgba(0, 0, 0, 0.3);
+    font-weight: 800;
+    text-shadow: 2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000, 1px 1px 0px #000, -1px -1px
+      0px #000, 1px -1px 0px #000, -1px 1px 0px #000;
     letter-spacing: 0.1em;
   }
 
@@ -126,7 +118,8 @@
     @apply font-heading font-black uppercase tracking-wider text-amber-950;
     font-family: "Inter", "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
     font-weight: 700;
-    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3), -0.5px -0.5px 0px rgba(255, 255, 255, 0.2);
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.8), -1px -1px 0px rgba(0, 0, 0, 0.8), 1px -1px 0px rgba(0, 0, 0, 0.8), -1px
+      1px 0px rgba(0, 0, 0, 0.8);
     letter-spacing: 0.08em;
   }
 
@@ -134,30 +127,39 @@
   .western-bold {
     @apply font-heading font-black uppercase tracking-wide text-amber-950;
     font-family: "Inter", "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-    font-weight: 800;
-    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8), -0.5px -0.5px 0px rgba(0, 0, 0, 0.3);
+    font-weight: 900;
+    text-shadow: 1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000;
     letter-spacing: 0.05em;
   }
 
   /* Maximum contrast text for important information */
   .high-contrast-text {
-    color: rgb(92, 57, 0);
+    color: #1a1a1a;
     font-weight: 600;
-    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.9), -0.5px -0.5px 0px rgba(0, 0, 0, 0.2);
+    text-shadow:
+      1px 1px 0px rgba(255, 255, 255, 0.8),
+      -1px -1px 0px rgba(255, 255, 255, 0.8),
+      1px -1px 0px rgba(255, 255, 255, 0.8),
+      -1px 1px 0px rgba(255, 255, 255, 0.8);
   }
 
   /* Light text on dark backgrounds with maximum contrast */
   .light-text {
-    color: white;
+    color: #ffffff;
     font-weight: 700;
-    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5), -0.5px -0.5px 0px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.9), -1px -1px 0px rgba(0, 0, 0, 0.9), 1px -1px 0px rgba(0, 0, 0, 0.9), -1px
+      1px 0px rgba(0, 0, 0, 0.9);
   }
 
   /* Blue text with maximum contrast for analysis sections */
   .blue-contrast-text {
-    color: rgb(30, 58, 138);
+    color: #1e3a8a;
     font-weight: 700;
-    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.9), -0.5px -0.5px 0px rgba(0, 0, 0, 0.2);
+    text-shadow:
+      1px 1px 0px rgba(255, 255, 255, 0.9),
+      -1px -1px 0px rgba(255, 255, 255, 0.9),
+      1px -1px 0px rgba(255, 255, 255, 0.9),
+      -1px 1px 0px rgba(255, 255, 255, 0.9);
   }
 }
 
@@ -277,10 +279,6 @@ h3 {
   /* Utility classes */
   .border-3 {
     border-width: 3px;
-  }
-
-  .border-4 {
-    border-width: 4px;
   }
 
   .border-5 {

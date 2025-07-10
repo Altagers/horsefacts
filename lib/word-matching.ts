@@ -1,182 +1,403 @@
-import { horseFacts } from "./horse-facts"
 import type { HorseFact } from "./horse-facts"
+import { horseFacts } from "./horse-facts"
 
-// Keywords for different categories of horse facts
-const keywordCategories = {
-  speed: ["fast", "speed", "quick", "run", "racing", "gallop", "mph", "velocity", "sprint", "dash"],
-  anatomy: ["body", "heart", "eyes", "teeth", "hooves", "mane", "tail", "muscle", "bone", "anatomy"],
-  behavior: ["sleep", "dream", "social", "herd", "communicate", "behavior", "emotion", "memory", "intelligence"],
-  history: ["ancient", "evolution", "wild", "domesticated", "history", "civilization", "culture", "tradition"],
-  breeds: ["breed", "arabian", "thoroughbred", "mustang", "clydesdale", "pony", "stallion", "mare"],
-  care: ["feed", "water", "grooming", "veterinary", "health", "care", "stable", "pasture"],
-  sports: ["riding", "equestrian", "jumping", "dressage", "polo", "rodeo", "competition", "olympic"],
-  nature: ["wild", "freedom", "plains", "grassland", "natural", "environment", "habitat", "wilderness"],
+// Ключевые слова для каждого факта о лошадях
+export const factKeywords: Record<number, string[]> = {
+  1: [
+    // Факт о дыхании через ноздри
+    "breathe",
+    "breathing",
+    "nose",
+    "mouth",
+    "air",
+    "oxygen",
+    "respiratory",
+    "nostrils",
+    "дышать",
+    "дыхание",
+    "нос",
+    "рот",
+    "воздух",
+    "кислород",
+    "дыхательный",
+    "ноздри",
+    "health",
+    "medical",
+    "anatomy",
+    "biology",
+    "science",
+    "body",
+    "физиология",
+    "здоровье",
+  ],
+  2: [
+    // Факт о зрении 360 градусов
+    "see",
+    "vision",
+    "eyes",
+    "sight",
+    "look",
+    "watch",
+    "view",
+    "observe",
+    "blind",
+    "видеть",
+    "зрение",
+    "глаза",
+    "смотреть",
+    "наблюдать",
+    "слепой",
+    "обзор",
+    "perspective",
+    "angle",
+    "around",
+    "behind",
+    "front",
+    "side",
+    "перспектива",
+    "угол",
+  ],
+  3: [
+    // Факт о самых больших глазах
+    "big",
+    "large",
+    "huge",
+    "giant",
+    "massive",
+    "enormous",
+    "biggest",
+    "largest",
+    "большой",
+    "огромный",
+    "гигантский",
+    "массивный",
+    "крупный",
+    "самый большой",
+    "eyes",
+    "eye",
+    "vision",
+    "sight",
+    "глаза",
+    "глаз",
+    "зрение",
+    "размер",
+    "size",
+  ],
+  4: [
+    // Факт о сне стоя
+    "sleep",
+    "sleeping",
+    "rest",
+    "tired",
+    "bed",
+    "night",
+    "dream",
+    "nap",
+    "standing",
+    "спать",
+    "сон",
+    "отдых",
+    "усталый",
+    "кровать",
+    "ночь",
+    "мечта",
+    "дремать",
+    "стоя",
+    "lie",
+    "lying",
+    "deep",
+    "mechanism",
+    "joints",
+    "лежать",
+    "глубокий",
+    "механизм",
+  ],
+  5: [
+    // Факт о сердце и крови
+    "heart",
+    "blood",
+    "pump",
+    "running",
+    "exercise",
+    "fitness",
+    "cardio",
+    "circulation",
+    "сердце",
+    "кровь",
+    "насос",
+    "бег",
+    "упражнения",
+    "фитнес",
+    "кардио",
+    "циркуляция",
+    "intense",
+    "workout",
+    "training",
+    "sport",
+    "athletic",
+    "интенсивный",
+    "тренировка",
+    "спорт",
+  ],
+  6: [
+    // Факт о зубах и возрасте
+    "teeth",
+    "tooth",
+    "age",
+    "old",
+    "young",
+    "grow",
+    "growing",
+    "lifetime",
+    "wear",
+    "зубы",
+    "зуб",
+    "возраст",
+    "старый",
+    "молодой",
+    "расти",
+    "рост",
+    "жизнь",
+    "износ",
+    "dental",
+    "bite",
+    "chew",
+    "eating",
+    "food",
+    "зубной",
+    "кусать",
+    "жевать",
+    "еда",
+  ],
+  7: [
+    // Факт о желчном пузыре
+    "digest",
+    "digestion",
+    "food",
+    "eat",
+    "eating",
+    "stomach",
+    "plant",
+    "vegetarian",
+    "переваривать",
+    "пищеварение",
+    "еда",
+    "есть",
+    "желудок",
+    "растение",
+    "вегетарианский",
+    "gallbladder",
+    "organ",
+    "anatomy",
+    "biology",
+    "желчный",
+    "орган",
+    "анатомия",
+    "биология",
+  ],
+  8: [
+    // Факт о памяти
+    "memory",
+    "remember",
+    "forget",
+    "recognize",
+    "people",
+    "friends",
+    "family",
+    "years",
+    "память",
+    "помнить",
+    "забывать",
+    "узнавать",
+    "люди",
+    "друзья",
+    "семья",
+    "годы",
+    "excellent",
+    "good",
+    "brain",
+    "mind",
+    "intelligence",
+    "отличный",
+    "хороший",
+    "мозг",
+    "ум",
+  ],
+  9: [
+    // Факт о мимике
+    "face",
+    "expression",
+    "communicate",
+    "emotion",
+    "feeling",
+    "smile",
+    "sad",
+    "happy",
+    "лицо",
+    "выражение",
+    "общаться",
+    "эмоция",
+    "чувство",
+    "улыбка",
+    "грустный",
+    "счастливый",
+    "facial",
+    "communication",
+    "social",
+    "лицевой",
+    "общение",
+    "социальный",
+    "мимика",
+  ],
+  10: [
+    // Факт об интеллекте
+    "smart",
+    "intelligent",
+    "learn",
+    "learning",
+    "door",
+    "open",
+    "mechanism",
+    "clever",
+    "умный",
+    "интеллектуальный",
+    "учиться",
+    "обучение",
+    "дверь",
+    "открывать",
+    "механизм",
+    "сообразительный",
+    "solve",
+    "problem",
+    "think",
+    "thinking",
+    "решать",
+    "проблема",
+    "думать",
+    "мышление",
+  ],
 }
 
-// Function to extract keywords from user casts
-function extractKeywords(userCasts: string[]): string[] {
-  const allText = userCasts.join(" ").toLowerCase()
-  const words = allText.match(/\b\w+\b/g) || []
+// Функция для анализа текста и подсчета совпадений
+export function analyzeTextForKeywords(text: string): Record<number, number> {
+  const scores: Record<number, number> = {}
+  const normalizedText = text.toLowerCase()
 
-  // Filter out common words and keep meaningful ones
-  const stopWords = new Set([
-    "the",
-    "a",
-    "an",
-    "and",
-    "or",
-    "but",
-    "in",
-    "on",
-    "at",
-    "to",
-    "for",
-    "of",
-    "with",
-    "by",
-    "is",
-    "are",
-    "was",
-    "were",
-    "be",
-    "been",
-    "have",
-    "has",
-    "had",
-    "do",
-    "does",
-    "did",
-    "will",
-    "would",
-    "could",
-    "should",
-    "may",
-    "might",
-    "can",
-    "this",
-    "that",
-    "these",
-    "those",
-    "i",
-    "you",
-    "he",
-    "she",
-    "it",
-    "we",
-    "they",
-    "me",
-    "him",
-    "her",
-    "us",
-    "them",
-  ])
-
-  return words.filter((word) => word.length > 2 && !stopWords.has(word))
-}
-
-// Function to calculate relevance score for a horse fact
-function calculateRelevanceScore(horseFact: HorseFact, userKeywords: string[]): number {
-  let score = 0
-  const factText = horseFact.fact.toLowerCase()
-
-  // Check for direct keyword matches in the fact
-  userKeywords.forEach((keyword) => {
-    if (factText.includes(keyword)) {
-      score += 3 // High score for direct matches
-    }
+  // Инициализируем счетчики для всех фактов
+  Object.keys(factKeywords).forEach((factId) => {
+    scores[Number(factId)] = 0
   })
 
-  // Check for category matches
-  Object.entries(keywordCategories).forEach(([category, categoryKeywords]) => {
-    const userHasCategoryKeywords = userKeywords.some((keyword) =>
-      categoryKeywords.some((catKeyword) => keyword.includes(catKeyword) || catKeyword.includes(keyword)),
-    )
-
-    if (userHasCategoryKeywords) {
-      const factHasCategoryKeywords = categoryKeywords.some((catKeyword) => factText.includes(catKeyword))
-
-      if (factHasCategoryKeywords) {
-        score += 2 // Medium score for category matches
+  // Подсчитываем совпадения для каждого факта
+  Object.entries(factKeywords).forEach(([factId, keywords]) => {
+    keywords.forEach((keyword) => {
+      const regex = new RegExp(`\\b${keyword.toLowerCase()}\\b`, "gi")
+      const matches = normalizedText.match(regex)
+      if (matches) {
+        scores[Number(factId)] += matches.length
       }
-    }
-  })
-
-  // Bonus for semantic similarity (simple approach)
-  const { speed, anatomy } = keywordCategories // Declare categoryKeywords variable
-  userKeywords.forEach((keyword) => {
-    speed.forEach((speedWord) => {
-      if (keyword.includes(speedWord) && factText.includes("fast")) score += 1
-    })
-    anatomy.forEach((anatomyWord) => {
-      if (keyword.includes(anatomyWord) && (factText.includes("body") || factText.includes("heart"))) score += 1
     })
   })
 
-  return score
+  return scores
 }
 
-// Main function to select the best horse fact based on user casts
+// Функция для выбора лучшего факта на основе анализа
 export function selectBestHorseFact(userCasts: string[]): HorseFact {
   if (!userCasts || userCasts.length === 0) {
-    // Return random fact if no casts
-    return horseFacts[Math.floor(Math.random() * horseFacts.length)]
+    // Если нет кастов, возвращаем случайный факт
+    return getRandomHorseFact()
   }
 
-  const userKeywords = extractKeywords(userCasts)
-  console.log("Extracted keywords:", userKeywords)
+  // Объединяем все касты в один текст
+  const combinedText = userCasts.join(" ")
 
-  if (userKeywords.length === 0) {
-    // Return random fact if no meaningful keywords
-    return horseFacts[Math.floor(Math.random() * horseFacts.length)]
-  }
+  // Анализируем текст
+  const scores = analyzeTextForKeywords(combinedText)
 
-  // Calculate scores for all horse facts
-  const scoredFacts = horseFacts.map((fact) => ({
-    fact,
-    score: calculateRelevanceScore(fact, userKeywords),
-  }))
+  // Находим факт с наивысшим счетом
+  let bestFactId = 1
+  let maxScore = scores[1]
 
-  // Sort by score (highest first)
-  scoredFacts.sort((a, b) => b.score - a.score)
-
-  console.log(
-    "Top 5 scored facts:",
-    scoredFacts.slice(0, 5).map((sf) => ({ id: sf.fact.id, score: sf.score })),
-  )
-
-  // If the top score is 0, return a random fact
-  if (scoredFacts[0].score === 0) {
-    return horseFacts[Math.floor(Math.random() * horseFacts.length)]
-  }
-
-  // Get all facts with the highest score
-  const topScore = scoredFacts[0].score
-  const topFacts = scoredFacts.filter((sf) => sf.score === topScore)
-
-  // Return a random fact from the top-scoring facts
-  return topFacts[Math.floor(Math.random() * topFacts.length)].fact
-}
-
-// Helper function to get top matching facts (for debugging)
-export function getTopMatchingFacts(userCasts: string[], limit = 5): Array<{ fact: HorseFact; score: number }> {
-  const userKeywords = extractKeywords(userCasts)
-
-  const scoredFacts = horseFacts.map((fact) => ({
-    fact,
-    score: calculateRelevanceScore(fact, userKeywords),
-  }))
-
-  return scoredFacts.sort((a, b) => b.score - a.score).slice(0, limit)
-}
-
-// Debug function to analyze word matching
-export function debugWordMatching(userCasts: string[]): void {
-  const userKeywords = extractKeywords(userCasts)
-  console.log("User keywords:", userKeywords)
-
-  const topFacts = getTopMatchingFacts(userCasts, 3)
-  console.log("Top matching facts:")
-  topFacts.forEach((item, index) => {
-    console.log(`${index + 1}. Fact #${item.fact.id} (Score: ${item.score}): ${item.fact.fact.substring(0, 100)}...`)
+  Object.entries(scores).forEach(([factId, score]) => {
+    if (score > maxScore) {
+      maxScore = score
+      bestFactId = Number(factId)
+    }
   })
+
+  // Если все счета равны 0, возвращаем случайный факт
+  if (maxScore === 0) {
+    return getRandomHorseFact()
+  }
+
+  // Возвращаем факт с наивысшим счетом
+  const selectedFact = horseFacts.find((fact) => fact.id === bestFactId)
+  return selectedFact || getRandomHorseFact()
+}
+
+// Вспомогательная функция для случайного выбора (если анализ не дал результатов)
+function getRandomHorseFact(): HorseFact {
+  const randomIndex = Math.floor(Math.random() * horseFacts.length)
+  return horseFacts[randomIndex]
+}
+
+// Функция для получения топ-3 наиболее подходящих фактов
+export function getTopMatchingFacts(userCasts: string[], count = 3): HorseFact[] {
+  if (!userCasts || userCasts.length === 0) {
+    // Возвращаем случайные факты
+    return horseFacts.sort(() => Math.random() - 0.5).slice(0, count)
+  }
+
+  const combinedText = userCasts.join(" ")
+  const scores = analyzeTextForKeywords(combinedText)
+
+  // Сортируем факты по счету
+  const sortedFacts = Object.entries(scores)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, count)
+    .map(([factId]) => {
+      const fact = horseFacts.find((f) => f.id === Number(factId))
+      return fact!
+    })
+    .filter(Boolean)
+
+  // Если не хватает фактов, добавляем случайные
+  while (sortedFacts.length < count) {
+    const randomFact = getRandomHorseFact()
+    if (!sortedFacts.find((f) => f.id === randomFact.id)) {
+      sortedFacts.push(randomFact)
+    }
+  }
+
+  return sortedFacts
+}
+
+// Функция для отладки - показывает, какие слова найдены
+export function debugWordMatching(userCasts: string[]): {
+  combinedText: string
+  scores: Record<number, number>
+  foundKeywords: Record<number, string[]>
+} {
+  const combinedText = userCasts.join(" ")
+  const scores = analyzeTextForKeywords(combinedText)
+  const foundKeywords: Record<number, string[]> = {}
+
+  const normalizedText = combinedText.toLowerCase()
+
+  Object.entries(factKeywords).forEach(([factId, keywords]) => {
+    foundKeywords[Number(factId)] = []
+    keywords.forEach((keyword) => {
+      const regex = new RegExp(`\\b${keyword.toLowerCase()}\\b`, "gi")
+      if (normalizedText.match(regex)) {
+        foundKeywords[Number(factId)].push(keyword)
+      }
+    })
+  })
+
+  return {
+    combinedText,
+    scores,
+    foundKeywords,
+  }
 }
