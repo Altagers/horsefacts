@@ -14,7 +14,7 @@ export function MiniKitContextProvider({ children }: { children: ReactNode }) {
           mode: "auto",
           theme: "horse-theme",
           name: "Horse Facts & Pics",
-          logo: process.env.NEXT_PUBLIC_ICON_URL,
+          logo: "/horse-logo.png",
         },
       }}
     >

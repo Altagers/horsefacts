@@ -15,14 +15,14 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
   const appName = "Horse Facts & Pics"
 
   // Ensure icon and splash URLs are absolute and have defaults
-  const appIcon = "/logo.png"
+  const appIcon = "/horse-logo.png"
   const appIconUrl = `${appBaseUrl}${appIcon}`
 
-  const appSplashImage = "/splash.png"
+  const appSplashImage = "/horse-splash.png"
   const appSplashImageUrl = `${appBaseUrl}${appSplashImage}`
 
   const appSplashBackgroundColor = "#8B4513"
-  const defaultFcFrameImage = `${appBaseUrl}/banner.png`
+  const defaultFcFrameImage = `${appBaseUrl}/horse-banner.png`
 
   // Define the frame structure
   let frameDefinition: any

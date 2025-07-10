@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   other: {
     "fc:frame": JSON.stringify({
       version: "next",
-      imageUrl: "https://v0-powerpuff-girls-ow.vercel.app/banner.png",
+      imageUrl: "https://v0-powerpuff-girls-ow.vercel.app/horse-banner.png",
       button: {
         title: "Discover Horse Facts",
         action: {
