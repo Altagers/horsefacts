@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
       version: "next",
       imageUrl: defaultFcFrameImage,
       button: {
-        title: "Discover Horse Facts",
+        title: "🐴 Discover Horse Facts",
         action: {
           type: "launch_frame",
           name: appName,
@@ -43,11 +43,11 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
       },
     }
     return {
-      title: "Horse Facts & Pics",
-      description: "Discover amazing horse facts with beautiful images!",
+      title: "Horse Facts & Pics - Made by @altagers.eth",
+      description: "Discover amazing horse facts! Made by @altagers.eth with @sohey help, powered by MiniKit 🚀",
       openGraph: {
         title: "Horse Facts & Pics",
-        description: "Learn fascinating facts about horses!",
+        description: "Learn fascinating facts about horses! Made by @altagers.eth with @sohey help 🐴",
         images: [{ url: defaultFcFrameImage }],
       },
       other: {
@@ -60,11 +60,21 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
   dynamicImageUrl.searchParams.set("factId", factId.toString())
   dynamicImageUrl.searchParams.set("factImage", horseFact.image)
 
+  const funnyPhrases = [
+    "Holy horseshoes!",
+    "Giddy up for knowledge!",
+    "Straight from the horse's mouth:",
+    "Neigh-ver knew this!",
+    "Stable genius fact:",
+  ]
+
+  const randomPhrase = funnyPhrases[Math.floor(Math.random() * funnyPhrases.length)]
+
   frameDefinition = {
     version: "next",
     imageUrl: dynamicImageUrl.toString(),
     button: {
-      title: `Horse Fact #${factId}! Discover More`,
+      title: `🤯 ${randomPhrase} Discover More!`,
       action: {
         type: "launch_frame",
         name: appName,
@@ -76,11 +86,11 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
   }
 
   return {
-    title: `Horse Fact #${factId} - Horse Facts & Pics`,
-    description: `${horseFact.fact}`,
+    title: `🐴 Horse Fact #${factId} - Made by @altagers.eth`,
+    description: `${horseFact.fact} Made by @altagers.eth with @sohey help, powered by MiniKit! 🚀`,
     openGraph: {
-      title: `Horse Fact #${factId} 🐴`,
-      description: horseFact.fact,
+      title: `🐴 Horse Fact #${factId} - Mind = Blown! 🤯`,
+      description: `${horseFact.fact} Made by @altagers.eth with @sohey help, powered by MiniKit!`,
       images: [{ url: dynamicImageUrl.toString(), width: 1200, height: 630, alt: `Horse Fact #${factId}` }],
     },
     other: {
@@ -99,11 +109,15 @@ export default function SharePage({ params }: Props) {
   if (!horseFact) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-amber-200 via-orange-200 to-yellow-300 p-8 text-center">
-        <h1 className="text-4xl font-heading text-amber-900 mb-6 font-bold">Oops! Horse Fact Not Found</h1>
-        <p className="font-body text-xl text-amber-800 mb-8">We couldn't find that horse fact.</p>
+        <div className="text-6xl mb-4 animate-bounce">🤠</div>
+        <h1 className="text-4xl font-heading text-amber-900 mb-6 font-bold">Whoa there, partner!</h1>
+        <p className="font-body text-xl text-amber-800 mb-8">This horse fact galloped away! 🐎💨</p>
         <a href={appBaseUrl}>
-          <HorseButton className="text-xl">Discover Horse Facts!</HorseButton>
+          <HorseButton className="text-xl">🎯 Discover Horse Facts!</HorseButton>
         </a>
+        <div className="mt-6 text-sm text-amber-700">
+          Made by @altagers.eth with @sohey help • Powered by MiniKit 🚀
+        </div>
       </div>
     )
   }
@@ -112,23 +126,36 @@ export default function SharePage({ params }: Props) {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-amber-200 via-orange-200 to-yellow-300 p-8 text-center">
-      <div className="bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-2xl border-4 border-amber-800 max-w-lg w-full">
-        <h2 className="font-heading text-amber-900 text-3xl mb-2 font-bold">This horse fact was shared:</h2>
+      <div className="bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-2xl border-4 border-amber-800 max-w-lg w-full relative">
+        <div className="absolute -top-4 -right-4 text-4xl animate-bounce">🤯</div>
+        <div className="absolute -top-4 -left-4 text-4xl animate-pulse">🐴</div>
+
+        <h2 className="font-heading text-amber-900 text-3xl mb-4 font-bold">
+          Holy horseshoes! Someone shared this epic fact:
+        </h2>
+
         <img
           src={ogImageUrl || "/placeholder.svg"}
           alt={`Horse Fact #${factId}`}
           width={400}
           height={210}
-          className="rounded-lg shadow-xl border-2 border-amber-800 mx-auto mb-6"
+          className="rounded-lg shadow-xl border-2 border-amber-800 mx-auto mb-6 hover:scale-105 transition-transform duration-300"
         />
-        <p className="font-body text-xl text-amber-800 mb-8">Someone shared Horse Fact #{factId}! 🐴</p>
+
+        <p className="font-body text-xl text-amber-800 mb-8">🎯 Horse Fact #{factId} is ready to blow your mind! 🤯</p>
+
         <a href={appBaseUrl}>
-          <HorseButton className="text-xl">Discover More Horse Facts!</HorseButton>
+          <HorseButton className="text-xl transform hover:scale-105 transition-all duration-200">
+            🚀 Discover More Epic Facts!
+          </HorseButton>
         </a>
+
+        <div className="mt-6 text-xs text-amber-700 italic">
+          Made by @altagers.eth with @sohey help • Powered by MiniKit 🚀
+        </div>
       </div>
-      <p className="font-body text-sm text-amber-800 mt-8">
-        You were viewing a shared horse fact. Click above to discover more!
-      </p>
+
+      <p className="font-body text-sm text-amber-800 mt-8 italic">"Neigh-ver a dull moment with horse facts!" 🐎✨</p>
     </div>
   )
 }
