@@ -11,7 +11,7 @@ const HorseHeaderImage = () => (
   <div className="flex justify-center mb-6">
     <div>
       <Image
-        src="/banner.png"
+        src="/horse-banner.png"
         alt="Horse Facts & Pics"
         width={320}
         height={160}
