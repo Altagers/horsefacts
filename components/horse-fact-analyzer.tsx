@@ -6,6 +6,8 @@ import type { HorseFact } from "@/lib/horse-facts"
 import Image from "next/image"
 import { HorseButton } from "./horse-button"
 import { ShareResultButton } from "./share-result-button"
+import { HorseLoversSection } from "./horse-lovers-section"
+import { Heart } from "lucide-react"
 
 const HorseHeaderImage = () => (
   <div className="flex justify-center mb-6">
@@ -33,6 +35,7 @@ export function HorseFactAnalyzer() {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<AnalysisResult | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [showHorseLovers, setShowHorseLovers] = useState(false)
 
   const handleAnalyze = async () => {
     const userFid = context?.user?.fid
@@ -69,7 +72,14 @@ export function HorseFactAnalyzer() {
   }
 
   if (result) {
-    return <ResultScreen result={result} onReset={() => setResult(null)} />
+    return (
+      <ResultScreen
+        result={result}
+        onReset={() => setResult(null)}
+        showHorseLovers={showHorseLovers}
+        setShowHorseLovers={setShowHorseLovers}
+      />
+    )
   }
 
   return (
@@ -92,7 +102,7 @@ export function HorseFactAnalyzer() {
         <HorseButton
           onClick={handleAnalyze}
           disabled={loading || !context?.user?.fid}
-          className="w-full text-xl transform hover:scale-105 transition-all duration-200"
+          className="w-full text-xl transform hover:scale-105 transition-all duration-200 mb-4"
           sparkles
         >
           {loading ? (
@@ -106,6 +116,18 @@ export function HorseFactAnalyzer() {
             "🎯 Get My Horse Fact!"
           )}
         </HorseButton>
+
+        {/* Horse Lovers Button */}
+        <button
+          onClick={() => setShowHorseLovers(true)}
+          className="w-full mb-4 px-4 py-2 bg-gradient-to-r from-pink-400 to-red-400 hover:from-pink-500 hover:to-red-500 text-white font-body font-semibold rounded-xl border-2 border-red-500 shadow-[3px_3px_0px_0px_rgba(185,28,28,1)] hover:shadow-[5px_5px_0px_0px_rgba(185,28,28,1)] transition-all duration-200 transform hover:scale-105"
+        >
+          <span className="flex items-center justify-center gap-2">
+            <Heart className="w-4 h-4 fill-current animate-pulse" />
+            Horse Lovers & Supporters
+            <Heart className="w-4 h-4 fill-current animate-pulse" />
+          </span>
+        </button>
 
         <div className="mt-4 text-xs text-amber-600 font-body">
           Made by{" "}
@@ -137,11 +159,24 @@ export function HorseFactAnalyzer() {
           </p>
         </div>
       )}
+
+      {/* Horse Lovers Modal */}
+      <HorseLoversSection isOpen={showHorseLovers} onClose={() => setShowHorseLovers(false)} />
     </div>
   )
 }
 
-function ResultScreen({ result, onReset }: { result: AnalysisResult; onReset: () => void }) {
+function ResultScreen({
+  result,
+  onReset,
+  showHorseLovers,
+  setShowHorseLovers,
+}: {
+  result: AnalysisResult
+  onReset: () => void
+  showHorseLovers: boolean
+  setShowHorseLovers: (show: boolean) => void
+}) {
   const funnyReactions = [
     "Holy horseshoes! 🐴",
     "Well, I'll be a horse's uncle! 🤠",
@@ -158,7 +193,7 @@ function ResultScreen({ result, onReset }: { result: AnalysisResult; onReset: ()
         {randomReaction} Fact #{result.horseFact.id}!
       </HorseButton>
 
-      <div className="mb-8 bg-white p-3 border-[5px] border-amber-800 rounded-3xl shadow-[6px_6px_0px_0px_rgba(133,77,14,1)] hover:shadow-[10px_10px_0px_0px_rgba(133,77,14,1)] transition-all duration-300 transform hover:scale-105">
+      <div className="mb-8 bg-white p-3 border-[5px] border-amber-800 rounded-3xl shadow-[6px_6px_0px_0px_rgba(133,77,14,1)] hover:shadow-[10px_10px_0px_0px_rgba(133,77,14,1)] transition-all duration-300 transform hover:scale-105 relative">
         <Image
           src={result.horseFact.image || "/placeholder.svg"}
           alt={`Horse Fact ${result.horseFact.id}`}
@@ -171,7 +206,7 @@ function ResultScreen({ result, onReset }: { result: AnalysisResult; onReset: ()
         </div>
       </div>
 
-      <div className="relative bg-gradient-to-br from-white to-amber-50 border-[5px] border-amber-800 rounded-3xl p-6 w-full mb-10 text-center shadow-[6px_6px_0px_0px_rgba(133,77,14,1)]">
+      <div className="relative bg-gradient-to-br from-white to-amber-50 border-[5px] border-amber-800 rounded-3xl p-6 w-full mb-6 text-center shadow-[6px_6px_0px_0px_rgba(133,77,14,1)]">
         <div className="absolute top-2 right-2 text-xl">🤯</div>
         <p className="text-lg font-body font-semibold text-amber-900 leading-relaxed mb-4">{result.horseFact.fact}</p>
         <div className="text-sm text-amber-600 italic">"Mind = Blown! 🤯"</div>
@@ -180,6 +215,21 @@ function ResultScreen({ result, onReset }: { result: AnalysisResult; onReset: ()
       </div>
 
       <ShareResultButton horseFact={result.horseFact} onReset={onReset} />
+
+      {/* Horse Lovers Button in results */}
+      <button
+        onClick={() => setShowHorseLovers(true)}
+        className="w-full mt-6 px-4 py-2 bg-gradient-to-r from-pink-400 to-red-400 hover:from-pink-500 hover:to-red-500 text-white font-body font-semibold rounded-xl border-2 border-red-500 shadow-[3px_3px_0px_0px_rgba(185,28,28,1)] hover:shadow-[5px_5px_0px_0px_rgba(185,28,28,1)] transition-all duration-200 transform hover:scale-105"
+      >
+        <span className="flex items-center justify-center gap-2">
+          <Heart className="w-4 h-4 fill-current animate-pulse" />
+          Horse Lovers & Supporters
+          <Heart className="w-4 h-4 fill-current animate-pulse" />
+        </span>
+      </button>
+
+      {/* Horse Lovers Modal */}
+      <HorseLoversSection isOpen={showHorseLovers} onClose={() => setShowHorseLovers(false)} />
     </div>
   )
 }
