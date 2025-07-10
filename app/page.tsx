@@ -2,11 +2,8 @@
 
 import { useEffect } from "react"
 import { useMiniKit } from "@coinbase/onchainkit/minikit"
-import { Name } from "@coinbase/onchainkit/identity"
-import { ConnectWallet, Wallet, WalletDropdown, WalletDropdownDisconnect } from "@coinbase/onchainkit/wallet"
-import { SentimentAnalyzer } from "@/components/sentiment-analyzer"
-import { PpgButton } from "@/components/ppg-button"
-import { Sparkles } from "lucide-react" // Using Lucide Sparkles for a cleaner look
+import { HorseFactAnalyzer } from "@/components/horse-fact-analyzer"
+import { Sparkles } from "lucide-react"
 
 // Simple Sparkle component for background decoration
 const BgSparkle = ({
@@ -17,7 +14,7 @@ const BgSparkle = ({
   delay = "0s",
 }: { top: string; left: string; size?: string; rotate?: string; delay?: string }) => (
   <Sparkles
-    className={`absolute text-white/70 ${size} transform rotate-${rotate} animate-pulse`}
+    className={`absolute text-amber-200/40 ${size} transform rotate-${rotate} animate-pulse`}
     style={{ top, left, animationDelay: delay }}
   />
 )
@@ -33,9 +30,9 @@ export default function Home() {
 
   return (
     <div
-      className="relative min-h-screen flex flex-col items-center p-4 pt-8 selection:bg-pink-300 selection:text-pink-900 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center p-4 pt-8 selection:bg-amber-300 selection:text-amber-900 overflow-hidden"
       style={{
-        background: "linear-gradient(to bottom, #FFD1DC, #FFE5B4)", // Pastel Pink to Peachy Yellow
+        background: "linear-gradient(to bottom, #D2B48C, #F5DEB3)", // Tan to wheat
       }}
     >
       {/* Background Sparkles */}
@@ -45,22 +42,21 @@ export default function Home() {
       <BgSparkle top="75%" left="90%" size="w-14 h-14" rotate="-5" delay="0.3s" />
       <BgSparkle top="40%" left="45%" size="w-8 h-8" rotate="20" delay="0.6s" />
 
-      {/* Themed Header - z-10 to be above sparkles but below modals if any */}
-      <header className="relative z-10 w-full max-w-xl mb-8 flex flex-col sm:flex-row justify-between items-center gap-4 p-4 bg-[#F283B3] border-[4px] border-black rounded-3xl shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+      {/* Themed Header */}
+      <header className="relative z-10 w-full max-w-xl mb-8 flex flex-col sm:flex-row justify-between items-center gap-4 p-6 bg-amber-100 border-[4px] border-amber-800 rounded-3xl shadow-[6px_6px_0px_0px_rgba(133,77,14,1)]">
         <div className="text-center sm:text-left">
-          <h1 className="font-heading text-4xl text-ppg-title leading-tight">PowerPuff Analyzer</h1>
-          <p className="font-body text-lg text-black font-medium">Discover your inner superhero!</p>
+          <h1 className="font-heading text-4xl text-amber-900 leading-tight font-bold">Horse Facts & Pics</h1>
+          <p className="font-body text-lg text-amber-700 font-medium">Discover amazing horse facts!</p>
         </div>
-        
       </header>
 
-      {/* Main sentiment analyzer component - z-10 as well */}
+      {/* Main horse fact analyzer component */}
       <div className="relative z-10">
-        <SentimentAnalyzer />
+        <HorseFactAnalyzer />
       </div>
 
       <footer className="relative z-10 mt-12 text-center">
-        <p className="font-body text-sm text-gray-700">Made with sugar, spice, and everything nice (and code!)</p>
+        <p className="font-body text-sm text-amber-800">Learn something new about these magnificent creatures!</p>
       </footer>
     </div>
   )

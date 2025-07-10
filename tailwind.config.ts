@@ -90,8 +90,7 @@ const config: Config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       fontFamily: {
-        // Use the exact font family names from @font-face rules
-        heading: ["Matemasie-Regular", "cursive", "sans-serif"],
+        heading: ["Matemasie-Regular", "serif", "sans-serif"],
         body: ["Quicksand-VariableFont_wght", "sans-serif"],
       },
     },
