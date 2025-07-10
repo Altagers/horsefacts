@@ -14,34 +14,33 @@ export async function POST(request: NextRequest) {
 
     console.log(`Backend: Received request to analyze FID: ${fid}`)
 
-    // 1. Fetch user casts from Neynar API
-    if (!process.env.NEYNAR_API_KEY) {
-      throw new Error("Neynar API key not configured")
+    // Check if Neynar API key is configured (optional for basic functionality)
+    if (process.env.NEYNAR_API_KEY) {
+      try {
+        // Try to get basic user info using free API
+        console.log(`Backend: Querying Neynar API for user info for FID: ${fid}`)
+
+        const neynarResponse = await fetch(`https://api.neynar.com/v2/farcaster/user/bulk?fids=${fid}`, {
+          method: "GET",
+          headers: {
+            accept: "application/json",
+            api_key: process.env.NEYNAR_API_KEY,
+          },
+        })
+
+        if (neynarResponse.ok) {
+          const neynarData = await neynarResponse.json()
+          const user = neynarData.users?.[0]
+          console.log(`Backend: Successfully fetched user info for ${user?.username || "unknown user"}`)
+        } else {
+          console.log(`Backend: Neynar API returned ${neynarResponse.status}, proceeding without user data`)
+        }
+      } catch (neynarError) {
+        console.log(`Backend: Neynar API error, proceeding without user data:`, neynarError)
+      }
     }
-    if (!process.env.OPENAI_API_KEY) {
-      throw new Error("OpenAI API key not configured")
-    }
 
-    console.log(`Backend: Querying Neynar API for FID: ${fid}`)
-
-    const neynarResponse = await fetch(`https://api.neynar.com/v2/farcaster/feed/user/popular?fid=${fid}&limit=10`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        api_key: process.env.NEYNAR_API_KEY,
-      },
-    })
-
-    if (!neynarResponse.ok) {
-      const errorText = await neynarResponse.text()
-      console.error(`Backend: Neynar API error for FID ${fid}: ${errorText}`)
-      throw new Error(`Neynar API error: ${neynarResponse.status} - ${errorText}`)
-    }
-
-    const neynarData = await neynarResponse.json()
-    const castTexts = neynarData.casts?.map((cast: any) => cast.text).filter(Boolean) || []
-
-    // Always return a random horse fact regardless of posts
+    // Always return a random horse fact regardless of API availability
     const horseFact = getRandomHorseFact()
 
     console.log(`Backend: Selected horse fact ${horseFact.id} for FID ${fid}`)
