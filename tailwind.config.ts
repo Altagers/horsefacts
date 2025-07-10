@@ -90,9 +90,9 @@ const config: Config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       fontFamily: {
-        heading: ["Matemasie-Regular", "serif", "sans-serif"],
-        body: ["Quicksand-VariableFont_wght", "sans-serif"],
-        ranch: ["Impact", "Arial Black", "Helvetica", "sans-serif"], // New ranch-style font
+        heading: ["Roboto", "Inter", "system-ui", "-apple-system", "sans-serif"],
+        body: ["Inter", "Roboto", "system-ui", "-apple-system", "sans-serif"],
+        ranch: ["Roboto", "Inter", "Impact", "Arial Black", "Helvetica", "sans-serif"], // Updated ranch font
       },
     },
   },

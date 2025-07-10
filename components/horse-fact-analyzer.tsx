@@ -119,23 +119,23 @@ export function HorseFactAnalyzer() {
         <h1 className="ranch-heading text-4xl md:text-5xl leading-none mb-4 relative">
           Smart Horse
           <br />
-          <span className="text-amber-800">Fact Analyzer</span>
+          <span className="text-amber-950">Fact Analyzer</span>
           <br />
           🧠🐴
         </h1>
 
-        <div className="bg-white/95 backdrop-blur-sm p-4 rounded-2xl border-3 border-amber-700 mb-6 shadow-lg">
+        <div className="bg-white/98 backdrop-blur-sm p-4 rounded-2xl border-3 border-amber-700 mb-6 shadow-lg">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Zap className="w-5 h-5 text-amber-800" />
-            <span className="western-bold text-amber-900 text-sm">KEYWORD-POWERED ANALYSIS</span>
-            <Search className="w-5 h-5 text-amber-800" />
+            <Zap className="w-5 h-5 text-amber-950" />
+            <span className="western-bold text-amber-950 text-sm">KEYWORD-POWERED ANALYSIS</span>
+            <Search className="w-5 h-5 text-amber-950" />
           </div>
-          <p className="font-body text-sm high-contrast-text leading-relaxed">
+          <p className="font-body text-sm high-contrast-text leading-relaxed font-semibold">
             We analyze your last 10 posts using smart keyword matching to find the perfect horse fact! 🎯
           </p>
         </div>
 
-        <p className="font-body text-lg text-amber-800 font-semibold mb-8 italic">"{currentSlogan}"</p>
+        <p className="font-body text-lg text-amber-950 font-bold mb-8 italic">"{currentSlogan}"</p>
 
         <HorseButton
           onClick={handleAnalyze}
@@ -170,14 +170,14 @@ export function HorseFactAnalyzer() {
           </span>
         </button>
 
-        <div className="mt-4 text-xs font-body bg-white/80 p-2 rounded-lg border border-amber-600">
-          <span className="high-contrast-text">
+        <div className="mt-4 text-xs font-body bg-white/95 p-3 rounded-lg border-2 border-amber-600">
+          <span className="high-contrast-text font-semibold">
             Made by{" "}
             <a
               href="https://farcaster.xyz/altagers.eth"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-amber-900 hover:text-amber-800 underline font-bold transition-colors duration-200"
+              className="text-amber-950 hover:text-amber-800 underline font-bold transition-colors duration-200"
             >
               @altagers.eth
             </a>{" "}
@@ -186,7 +186,7 @@ export function HorseFactAnalyzer() {
               href="https://farcaster.xyz/sohey"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-amber-900 hover:text-amber-800 underline font-bold transition-colors duration-200"
+              className="text-amber-950 hover:text-amber-800 underline font-bold transition-colors duration-200"
             >
               @sohey
             </a>{" "}
@@ -239,9 +239,9 @@ function ResultScreen({
 
   const getAnalysisIcon = () => {
     if (result.analysis.method === "keyword-analysis") {
-      return <Zap className="w-5 h-5 text-blue-700" />
+      return <Zap className="w-5 h-5 text-blue-950" />
     }
-    return <span className="text-blue-700">🎲</span>
+    return <span className="text-blue-950">🎲</span>
   }
 
   const getAnalysisTitle = () => {
@@ -257,13 +257,13 @@ function ResultScreen({
         {randomReaction} Fact #{result.horseFact.id}!
       </HorseButton>
 
-      {/* Analysis Info with better contrast */}
+      {/* Analysis Info with maximum contrast */}
       <div className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-4 border-blue-600 rounded-2xl p-4 w-full text-center shadow-[4px_4px_0px_0px_rgba(37,99,235,1)]">
         <div className="flex items-center justify-center gap-2 mb-2">
           {getAnalysisIcon()}
-          <span className="western-bold text-blue-900 text-sm">{getAnalysisTitle()}</span>
+          <span className="western-bold blue-contrast-text text-sm">{getAnalysisTitle()}</span>
         </div>
-        <p className="font-body text-sm text-blue-800 font-semibold">{getAnalysisMessage()}</p>
+        <p className="font-body text-sm blue-contrast-text font-bold">{getAnalysisMessage()}</p>
       </div>
 
       <div className="mb-8 bg-white p-3 border-[5px] border-amber-800 rounded-3xl shadow-[6px_6px_0px_0px_rgba(133,77,14,1)] hover:shadow-[10px_10px_0px_0px_rgba(133,77,14,1)] transition-all duration-300 transform hover:scale-105 relative">
@@ -274,17 +274,17 @@ function ResultScreen({
           height={280}
           className="rounded-2xl object-cover"
         />
-        <div className="absolute -top-2 -right-2 bg-amber-500 text-amber-900 rounded-full w-8 h-8 flex items-center justify-center western-bold text-sm border-3 border-amber-800 shadow-lg">
+        <div className="absolute -top-2 -right-2 bg-amber-500 text-amber-950 rounded-full w-8 h-8 flex items-center justify-center western-bold text-sm border-3 border-amber-800 shadow-lg">
           #{result.horseFact.id}
         </div>
       </div>
 
       <div className="relative bg-gradient-to-br from-white to-amber-50 border-[5px] border-amber-800 rounded-3xl p-6 w-full mb-6 text-center shadow-[6px_6px_0px_0px_rgba(133,77,14,1)]">
         <div className="absolute top-2 right-2 text-xl">🤯</div>
-        <p className="text-lg font-body font-bold text-amber-900 leading-relaxed mb-4 high-contrast-text">
+        <p className="text-lg font-body font-bold text-amber-950 leading-relaxed mb-4 high-contrast-text">
           {result.horseFact.fact}
         </p>
-        <div className="text-sm western-bold text-amber-800 bg-amber-100 px-3 py-1 rounded-full border-2 border-amber-600">
+        <div className="text-sm western-bold text-amber-950 bg-amber-100 px-3 py-1 rounded-full border-2 border-amber-600">
           {result.analysis.method === "keyword-analysis" ? "Matched to your interests! 🎯" : "Mind = Blown! 🤯"}
         </div>
         <div className="absolute left-1/2 -bottom-[19px] transform -translate-x-1/2 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[20px] border-t-amber-800" />
