@@ -10,32 +10,28 @@ function withValidProperties(properties: Record<string, undefined | string | str
 }
 
 export async function GET() {
-  const URL = process.env.NEXT_PUBLIC_URL
-
   return Response.json({
-    accountAssociation: {
-      header: process.env.FARCASTER_HEADER,
-      payload: process.env.FARCASTER_PAYLOAD,
-      signature: process.env.FARCASTER_SIGNATURE,
-    },
-    frame: withValidProperties({
-      version: "1",
+    frame: {
       name: "Horse Facts & Pics",
-      subtitle: "Discover Amazing Horse Facts",
-      description: "Learn fascinating facts about horses with beautiful images",
-      screenshotUrls: [],
-      iconUrl: `${URL}/horse-logo.png`,
-      splashImageUrl: `${URL}/horse-splash.png`,
-      splashBackgroundColor: "#8B4513",
-      homeUrl: URL,
-      webhookUrl: `${URL}/api/webhook`,
-      primaryCategory: "education",
-      tags: ["horses", "facts", "education", "animals"],
-      heroImageUrl: `${URL}/horse-banner.png`,
-      tagline: "Amazing Horse Facts & Beautiful Pictures",
-      ogTitle: "Horse Facts & Pics - Learn About Horses",
-      ogDescription: "Discover fascinating facts about horses with stunning imagery",
-      ogImageUrl: `${URL}/banner.png`,
-    }),
+      version: "1",
+      iconUrl: "https://horsefacts-pics.vercel.app/horse-logo.png",
+      homeUrl: "https://horsefacts-pics.vercel.app",
+      imageUrl: "https://horsefacts-pics.vercel.app/horse-banner.png",
+      buttonTitle: "Check your horse fact!",
+      splashImageUrl: "https://horsefacts-pics.vercel.app/horse-splash.png",
+      splashBackgroundColor: "#783516",
+      webhookUrl: "https://horsefacts-pics.vercel.app/api/webhook",
+      subtitle: "Horse check!",
+      description: "Just horse facts and pics",
+      primaryCategory: "games",
+      tagline: "Check your horse fact!",
+    },
+    accountAssociation: {
+      header:
+        "eyJmaWQiOjIxNzI2MSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDA3RjZkOEQzMWY0NjVGY2IyQTEyRjNEMjY3Njc3MDViRUMyMzEzOTkifQ",
+      payload: "eyJkb21haW4iOiJob3JzZWZhY3RzLXBpY3MudmVyY2VsLmFwcCJ9",
+      signature:
+        "MHgzZGZhZjU0ZWU0MWEzNDkzNzY4ZjgxNDkzNzQzY2JhYWE5ODc4MDMzMzc0N2RhYTUwMmYzYzg2ZWZmMDg1ZTk1MGMwMzc3Y2YxNTU0NTNkMjUyMWY0NzFlOWE3MGRhNjRmY2ZlNjhjNTNlOGY5MmUzOGY1MjExZGYwMmQ2MGEwMjFj",
+    },
   })
 }
