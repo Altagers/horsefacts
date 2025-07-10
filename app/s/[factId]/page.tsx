@@ -60,21 +60,11 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
   dynamicImageUrl.searchParams.set("factId", factId.toString())
   dynamicImageUrl.searchParams.set("factImage", horseFact.image)
 
-  const funnyPhrases = [
-    "Holy horseshoes!",
-    "Giddy up for knowledge!",
-    "Straight from the horse's mouth:",
-    "Neigh-ver knew this!",
-    "Stable genius fact:",
-  ]
-
-  const randomPhrase = funnyPhrases[Math.floor(Math.random() * funnyPhrases.length)]
-
   frameDefinition = {
     version: "next",
     imageUrl: dynamicImageUrl.toString(),
     button: {
-      title: `🤯 ${randomPhrase} Discover More!`,
+      title: `Horse Fact #${factId}! Discover More`,
       action: {
         type: "launch_frame",
         name: appName,
