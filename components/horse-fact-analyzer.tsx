@@ -7,6 +7,7 @@ import Image from "next/image"
 import { HorseButton } from "./horse-button"
 import { ShareResultButton } from "./share-result-button"
 import { HorseLoversSection } from "./horse-lovers-section"
+import { FeedDucksButton } from "./feed-ducks-button"
 import { Heart, Brain, Search, Zap } from "lucide-react"
 
 const HorseHeaderImage = () => (
@@ -158,6 +159,11 @@ export function HorseFactAnalyzer() {
           )}
         </HorseButton>
 
+        {/* Feed the Ducks Button */}
+        <div className="mb-4">
+          <FeedDucksButton />
+        </div>
+
         {/* Horse Lovers Button */}
         <button
           onClick={() => setShowHorseLovers(true)}
@@ -293,10 +299,15 @@ function ResultScreen({
 
       <ShareResultButton horseFact={result.horseFact} onReset={onReset} />
 
+      {/* Feed the Ducks Button in results */}
+      <div className="w-full mt-4">
+        <FeedDucksButton />
+      </div>
+
       {/* Horse Lovers Button in results with better contrast */}
       <button
         onClick={() => setShowHorseLovers(true)}
-        className="w-full mt-6 px-4 py-2 bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white western-button-text text-sm rounded-xl border-3 border-red-700 shadow-[3px_3px_0px_0px_rgba(153,27,27,1)] hover:shadow-[5px_5px_0px_0px_rgba(153,27,27,1)] transition-all duration-200 transform hover:scale-105"
+        className="w-full mt-4 px-4 py-2 bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white western-button-text text-sm rounded-xl border-3 border-red-700 shadow-[3px_3px_0px_0px_rgba(153,27,27,1)] hover:shadow-[5px_5px_0px_0px_rgba(153,27,27,1)] transition-all duration-200 transform hover:scale-105"
       >
         <span className="flex items-center justify-center gap-2 light-text">
           <Heart className="w-4 h-4 fill-current animate-pulse" />
