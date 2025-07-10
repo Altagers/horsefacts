@@ -50,7 +50,7 @@ type AnalysisResult = {
   horseFact: HorseFact
   message: string
   analysis: {
-    postsAnalyzed: number
+    castsAnalyzed: number
     userName: string
     method: "keyword-analysis" | "random"
   }
@@ -78,7 +78,7 @@ export function HorseFactAnalyzer() {
     setError(null)
     setResult(null)
 
-    console.log(`Frontend: Analyzing posts for FID: ${userFid}`)
+    console.log(`Frontend: Analyzing casts for FID: ${userFid}`)
 
     try {
       const response = await fetch("/api/analyze-user", {
@@ -89,7 +89,7 @@ export function HorseFactAnalyzer() {
         body: JSON.stringify({ fid: userFid }),
       })
       const data = await response.json()
-      if (!response.ok || data.error) throw new Error(data.error || "Failed to analyze posts")
+      if (!response.ok || data.error) throw new Error(data.error || "Failed to analyze casts")
       setResult(data)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Oops! Our horses are taking a hay break 🌾")
@@ -131,7 +131,7 @@ export function HorseFactAnalyzer() {
             <Search className="w-5 h-5 text-amber-950" />
           </div>
           <p className="font-body text-sm high-contrast-text leading-relaxed font-semibold">
-            We analyze your last 10 posts using smart keyword matching to find the perfect horse fact! 🎯
+            We analyze your last 10 casts using smart keyword matching to find the perfect horse fact! 🎯
           </p>
         </div>
 
@@ -146,14 +146,14 @@ export function HorseFactAnalyzer() {
           {loading ? (
             <span className="flex items-center justify-center gap-2">
               <Brain className="w-5 h-5 animate-pulse" />
-              Analyzing your posts...
+              Analyzing your casts...
             </span>
           ) : !context?.user?.fid ? (
             "🔗 Connect Wallet to Analyze"
           ) : (
             <span className="flex items-center justify-center gap-2">
               <Search className="w-5 h-5" />
-              Analyze My Posts!
+              Analyze My Casts!
             </span>
           )}
         </HorseButton>
@@ -232,9 +232,9 @@ function ResultScreen({
 
   const getAnalysisMessage = () => {
     if (result.analysis.method === "keyword-analysis") {
-      return `🎯 Analyzed ${result.analysis.postsAnalyzed} posts from @${result.analysis.userName}`
+      return `🎯 Analyzed ${result.analysis.castsAnalyzed} casts from @${result.analysis.userName}`
     }
-    return "🎲 Random selection (no recent posts found)"
+    return "🎲 Random selection (no recent casts found)"
   }
 
   const getAnalysisIcon = () => {

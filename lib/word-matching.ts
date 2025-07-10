@@ -303,14 +303,14 @@ export function analyzeTextForKeywords(text: string): Record<number, number> {
 }
 
 // Функция для выбора лучшего факта на основе анализа
-export function selectBestHorseFact(userPosts: string[]): HorseFact {
-  if (!userPosts || userPosts.length === 0) {
-    // Если нет постов, возвращаем случайный факт
+export function selectBestHorseFact(userCasts: string[]): HorseFact {
+  if (!userCasts || userCasts.length === 0) {
+    // Если нет кастов, возвращаем случайный факт
     return getRandomHorseFact()
   }
 
-  // Объединяем все посты в один текст
-  const combinedText = userPosts.join(" ")
+  // Объединяем все касты в один текст
+  const combinedText = userCasts.join(" ")
 
   // Анализируем текст
   const scores = analyzeTextForKeywords(combinedText)
@@ -343,13 +343,13 @@ function getRandomHorseFact(): HorseFact {
 }
 
 // Функция для получения топ-3 наиболее подходящих фактов
-export function getTopMatchingFacts(userPosts: string[], count = 3): HorseFact[] {
-  if (!userPosts || userPosts.length === 0) {
+export function getTopMatchingFacts(userCasts: string[], count = 3): HorseFact[] {
+  if (!userCasts || userCasts.length === 0) {
     // Возвращаем случайные факты
     return horseFacts.sort(() => Math.random() - 0.5).slice(0, count)
   }
 
-  const combinedText = userPosts.join(" ")
+  const combinedText = userCasts.join(" ")
   const scores = analyzeTextForKeywords(combinedText)
 
   // Сортируем факты по счету
@@ -374,12 +374,12 @@ export function getTopMatchingFacts(userPosts: string[], count = 3): HorseFact[]
 }
 
 // Функция для отладки - показывает, какие слова найдены
-export function debugWordMatching(userPosts: string[]): {
+export function debugWordMatching(userCasts: string[]): {
   combinedText: string
   scores: Record<number, number>
   foundKeywords: Record<number, string[]>
 } {
-  const combinedText = userPosts.join(" ")
+  const combinedText = userCasts.join(" ")
   const scores = analyzeTextForKeywords(combinedText)
   const foundKeywords: Record<number, string[]> = {}
 
