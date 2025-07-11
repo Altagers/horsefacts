@@ -7,11 +7,7 @@ class FarcasterIntegration {
   }
 
   async init() {
-    if (!window.isMiniApp) {
-      console.log('⏭️ Not in Mini App environment, skipping Farcaster initialization');
-      return;
-    }
-
+    // Удалена проверка window.isMiniApp!
     try {
       console.log('🔄 Initializing Farcaster integration...');
       const sdk = await this.waitForSDK();
@@ -23,77 +19,89 @@ class FarcasterIntegration {
           inMini = await sdk.isInMiniApp();
           console.log('🔍 SDK environment check:', inMini);
         }
-      } catch {}
+      } catch (error) {
+        console.log('⚠️ Could not verify environment with SDK:', error);
+      }
 
       if (inMini) {
         this.isInMiniApp = true;
         this.isFarcasterApp = true;
-        console.log('✅ Farcaster SDK initialized');
+        console.log('✅ Farcaster SDK initialized successfully');
 
         try {
           this.context = await sdk.context;
-          console.log('📋 Context received');
-        } catch {}
+          console.log('📋 Farcaster context received');
+        } catch (error) {
+          console.log('⚠️ Could not get context:', error.message);
+        }
 
         await this.setupMiniAppFeatures();
       } else {
-        console.log('⚠️ Not in Mini App according to SDK');
+        console.log('⚠️ SDK reports not in Mini App environment');
       }
-    } catch (e) {
-      console.error('❌ Initialization error:', e);
+    } catch (error) {
+      console.error('❌ Error initializing Farcaster SDK:', error);
       this.isInMiniApp = false;
     }
   }
 
   async waitForSDK() {
     let attempts = 0;
-    while (attempts < 50) {
+    const maxAttempts = 50;
+    while (attempts < maxAttempts) {
       if (window.sdk && typeof window.sdk.actions === 'object') {
         return window.sdk;
       }
-      await new Promise(res => setTimeout(res, 100));
+      await new Promise(resolve => setTimeout(resolve, 100));
       attempts++;
     }
-    throw new Error('SDK load timeout');
+    throw new Error('SDK not loaded within timeout');
   }
 
   async setupMiniAppFeatures() {
-    await new Promise(res => {
-      requestAnimationFrame(() => setTimeout(res, 500));
+    await new Promise(resolve => {
+      requestAnimationFrame(() => setTimeout(resolve, 500));
     });
-    console.log('🎉 Mini App features ready');
+    console.log('🎉 Mini App features setup complete');
   }
 
   async notifyAppReady() {
-    if (this.isInMiniApp && this.sdk?.actions?.ready) {
+    if (this.sdk?.actions?.ready) {
       try {
         await this.sdk.actions.ready({ disableNativeGestures: false });
-        console.log('🎉 Splash screen dismissed');
-      } catch (e) {
-        console.error('❌ Ready error:', e);
+        console.log('🎉 Farcaster splash screen dismissed');
+      } catch (error) {
+        console.error('❌ Failed to dismiss splash screen:', error);
       }
     }
   }
 
   async sendDonation(amount = '1000000') {
-    if (!this.isFarcasterApp || !this.sdk?.actions?.sendToken) {
-      console.log('❌ SDK not available for donation');
+    if (!this.sdk?.actions?.sendToken) {
+      console.log('Farcaster SDK not available for donation');
       return { success: false, reason: 'sdk_unavailable' };
     }
+
     try {
       const result = await this.sdk.actions.sendToken({
         token: 'eip155:8453/erc20:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
-        amount,
-        recipientAddress: '0x956Fa79B6855a4660FCdCe28cDf96c0042E6E2AF',
+        amount: amount,
+        recipientAddress: '0x956Fa79B6855a4660FCdCe28cDf96c0042E6E2AF'
       });
-      console.log(result.success ? '✅ Donation sent' : '❌ Donation failed', result);
+
+      if (result.success) {
+        console.log('Donation sent successfully:', result.send.transaction);
+      } else {
+        console.log('Error during donation:', result.error);
+      }
       return result;
-    } catch (e) {
-      console.error('❌ sendDonation error:', e);
-      return { success: false, reason: 'send_failed', error: e.message };
+    } catch (error) {
+      console.error('Error sending donation:', error);
+      return { success: false, reason: 'send_failed', error: error.message };
     }
   }
 }
 
+// Expose globally
 window.farcasterIntegration = new FarcasterIntegration();
 console.log('FarcasterIntegration.js loaded');
