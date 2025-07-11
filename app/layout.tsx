@@ -35,7 +35,6 @@ export default function RootLayout({
     <html lang="en">
       <body className="font-body antialiased">
         <MiniKitContextProvider>
-          {/* сюда попадёт клиентский слой */}
           <ClientLayout>{children}</ClientLayout>
         </MiniKitContextProvider>
       </body>
