@@ -1,12 +1,11 @@
-import type React from "react"
-import type { Metadata } from "next"
-import "./globals.css"
-import { MiniKitContextProvider } from "@/provider/minikit-provider"
+import type React from "react";
+import type { Metadata } from "next";
+import "./globals.css";
+import { MiniKitContextProvider } from "@/provider/minikit-provider";
 
 export const metadata: Metadata = {
   title: "Horse Facts & Pics",
-  description:
-    "Discover amazing horse facts with beautiful images. Learn fascinating information about these magnificent creatures!",
+  description: "Discover amazing horse facts with beautiful images. Learn fascinating information about these magnificent creatures!",
   generator: "v0.dev",
   other: {
     "fc:frame": JSON.stringify({
@@ -24,18 +23,30 @@ export const metadata: Metadata = {
       },
     }),
   },
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className="font-body antialiased">
+      <head>
+        {/* Farcaster SDK через CDN */}
+        <script src="https://sdk.farcaster.xyz/v0.11.1/farcaster-sdk.js"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.isMiniApp = true;
+              console.log('Farcaster SDK loaded');
+            `,
+          }}
+        />
+      </head>
+      <body>
         <MiniKitContextProvider>{children}</MiniKitContextProvider>
       </body>
     </html>
-  )
+  );
 }
