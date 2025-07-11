@@ -1,105 +1,84 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { selectBestHorseFact, debugWordMatching } from "@/lib/word-matching"
+import { selectBestHorseFact } from "@/lib/word-matching"
 
-export const maxDuration = 60
+const NEYNAR_API_KEY = process.env.NEYNAR_API_KEY
+
+interface NeynarCast {
+  text: string
+  timestamp: string
+  author: {
+    username: string
+    display_name: string
+  }
+}
+
+interface NeynarResponse {
+  casts: NeynarCast[]
+}
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
-    const fid = body.fid
+    const { fid } = await request.json()
 
     if (!fid) {
-      throw new Error("FID not provided in the request body")
+      return NextResponse.json({ error: "FID is required" }, { status: 400 })
     }
 
-    console.log(`Backend: Received request to analyze FID: ${fid}`)
-
-    let userCasts: string[] = []
-    let userName = "unknown user"
-
-    // Получаем касты пользователя через Neynar API
-    if (process.env.NEYNAR_API_KEY) {
-      try {
-        console.log(`Backend: Fetching user casts for FID: ${fid}`)
-
-        // Сначала получаем информацию о пользователе
-        const userResponse = await fetch(`https://api.neynar.com/v2/farcaster/user/bulk?fids=${fid}`, {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            api_key: process.env.NEYNAR_API_KEY,
-          },
-        })
-
-        if (userResponse.ok) {
-          const userData = await userResponse.json()
-          const user = userData.users?.[0]
-          userName = user?.username || "unknown user"
-          console.log(`Backend: Successfully fetched user info for ${userName}`)
-        }
-
-        // Получаем последние касты пользователя
-        const castsResponse = await fetch(`https://api.neynar.com/v2/farcaster/feed/user/casts?fid=${fid}&limit=10`, {
-          method: "GET",
-          headers: {
-            accept: "application/json",
-            api_key: process.env.NEYNAR_API_KEY,
-          },
-        })
-
-        if (castsResponse.ok) {
-          const castsData = await castsResponse.json()
-          const casts = castsData.casts || []
-
-          // Извлекаем текст из кастов
-          userCasts = casts
-            .map((cast: any) => cast.text)
-            .filter((text: string) => text && text.trim().length > 0)
-            .slice(0, 10) // Берем максимум 10 кастов
-
-          console.log(`Backend: Successfully fetched ${userCasts.length} casts for ${userName}`)
-          console.log(`Backend: Sample casts:`, userCasts.slice(0, 2))
-        } else {
-          console.log(`Backend: Failed to fetch casts, status: ${castsResponse.status}`)
-        }
-      } catch (neynarError) {
-        console.log(`Backend: Neynar API error:`, neynarError)
-      }
+    if (!NEYNAR_API_KEY) {
+      console.error("❌ NEYNAR_API_KEY is not configured")
+      return NextResponse.json({ error: "API configuration error" }, { status: 500 })
     }
 
-    // Анализируем касты и выбираем подходящий факт
-    const selectedFact = selectBestHorseFact(userCasts)
+    console.log(`🔍 Backend: Fetching casts for FID: ${fid}`)
 
-    // Для отладки - показываем, что было найдено
-    if (userCasts.length > 0) {
-      const debugInfo = debugWordMatching(userCasts)
-      console.log(`Backend: Analysis for ${userName}:`)
-      console.log(`- Casts analyzed: ${userCasts.length}`)
-      console.log(`- Combined text length: ${debugInfo.combinedText.length}`)
-      console.log(`- Scores:`, debugInfo.scores)
-      console.log(`- Found keywords:`, debugInfo.foundKeywords)
-      console.log(`- Selected fact: #${selectedFact.id}`)
+    // Fetch user's recent casts from Neynar API
+    const neynarUrl = `https://api.neynar.com/v2/farcaster/casts?fid=${fid}&limit=10`
+
+    const response = await fetch(neynarUrl, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        api_key: NEYNAR_API_KEY,
+      },
+    })
+
+    if (!response.ok) {
+      console.error(`❌ Neynar API error: ${response.status} ${response.statusText}`)
+      const errorText = await response.text()
+      console.error("Error details:", errorText)
+      return NextResponse.json({ error: "Failed to fetch user casts" }, { status: 500 })
     }
 
-    return NextResponse.json({
-      horseFact: selectedFact,
-      message:
-        userCasts.length > 0
-          ? `Based on your casts, here's a horse fact that matches your interests!`
-          : "Here's an amazing horse fact just for you!",
+    const data: NeynarResponse = await response.json()
+    console.log(`📊 Backend: Retrieved ${data.casts?.length || 0} casts`)
+
+    // Extract cast text for analysis
+    const userCasts: string[] = data.casts?.map((cast) => cast.text) || []
+    const userName = data.casts?.[0]?.author?.username || data.casts?.[0]?.author?.display_name || "Unknown"
+
+    console.log(`📝 Backend: Analyzing ${userCasts.length} casts for user: ${userName}`)
+    console.log("Cast texts:", userCasts.slice(0, 3)) // Log first 3 for debugging
+
+    // Use word matching to select the best horse fact
+    const horseFact = selectBestHorseFact(userCasts)
+
+    // Determine analysis method
+    const method = userCasts.length > 0 ? "keyword-analysis" : "random"
+
+    const result = {
+      horseFact,
+      message: `Here's your personalized horse fact based on your recent casts!`,
       analysis: {
         castsAnalyzed: userCasts.length,
         userName: userName,
-        method: userCasts.length > 0 ? "keyword-analysis" : "random",
+        method: method,
       },
-    })
+    }
+
+    console.log(`✅ Backend: Returning fact #${horseFact.id} via ${method} method`)
+    return NextResponse.json(result)
   } catch (error) {
-    console.error("Backend: Error in analyze-user route:", error)
-    return NextResponse.json(
-      {
-        error: error instanceof Error ? error.message : "Failed to fetch horse fact",
-      },
-      { status: 500 },
-    )
+    console.error("❌ Backend error:", error)
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }
