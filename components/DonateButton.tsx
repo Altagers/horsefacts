@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function DonateButton() {
+export default function DonateButton({ amount = '1000000' }: { amount?: string }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
@@ -10,19 +10,24 @@ export default function DonateButton() {
     setLoading(true);
     setMessage(null);
 
-    if (!window.farcasterIntegration) {
+    if (typeof window === 'undefined' || !window.farcasterIntegration) {
       setMessage('Donation feature unavailable.');
       setLoading(false);
       return;
     }
 
-    const result = await window.farcasterIntegration.sendDonation();
-    if (result.success) {
-      setMessage('Thank you for your donation!');
-    } else {
-      setMessage(`Donation failed: ${result.reason || 'unknown error'}`);
+    try {
+      const result = await window.farcasterIntegration.sendDonation(amount);
+      if (result.success) {
+        setMessage('Thank you for your donation!');
+      } else {
+        setMessage(`Donation failed: ${result.reason}`);
+      }
+    } catch {
+      setMessage('Donation failed: unexpected error');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (

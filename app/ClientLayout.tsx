@@ -1,21 +1,15 @@
-"use client";
+'use client';
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect } from 'react';
 
-export default function ClientLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function ClientLayout({ children }: { children: ReactNode }) {
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "/scripts/FarcasterIntegration.js";
-    script.defer = true;
+    // Создаём <script type="module">
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.src = '/scripts/FarcasterIntegration.js';
     script.onload = async () => {
-      if (window.farcasterIntegration) {
-        await window.farcasterIntegration.init();
-        await window.farcasterIntegration.notifyAppReady();
-      }
+      await window.farcasterIntegration?.init();
     };
     document.body.appendChild(script);
   }, []);
