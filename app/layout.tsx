@@ -1,7 +1,8 @@
-import type React from "react"
-import type { Metadata } from "next"
-import "./globals.css"
-import { MiniKitContextProvider } from "@/provider/minikit-provider"
+import type React from "react";
+import type { Metadata } from "next";
+import "./globals.css";
+import { MiniKitContextProvider } from "@/provider/minikit-provider";
+import { ReactNode, useEffect } from "react";
 
 export const metadata: Metadata = {
   title: "Horse Facts & Pics",
@@ -24,18 +25,31 @@ export const metadata: Metadata = {
       },
     }),
   },
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "/scripts/FarcasterIntegration.js";
+    script.defer = true;
+    script.onload = async () => {
+      if (window.farcasterIntegration) {
+        await window.farcasterIntegration.init();
+        await window.farcasterIntegration.notifyAppReady();
+      }
+    };
+    document.body.appendChild(script);
+  }, []);
+
   return (
     <html lang="en">
       <body className="font-body antialiased">
         <MiniKitContextProvider>{children}</MiniKitContextProvider>
       </body>
     </html>
-  )
+  );
 }
