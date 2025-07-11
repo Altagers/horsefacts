@@ -1,26 +1,28 @@
-import type React from "react";
-import type { Metadata } from "next";
-import "./globals.css";
-import { MiniKitContextProvider } from "@/provider/minikit-provider";
-import { ReactNode, useEffect } from "react";
+'use client';
+
+import type React from 'react';
+import type { Metadata } from 'next';
+import './globals.css';
+import { MiniKitContextProvider } from '@/provider/minikit-provider';
+import { ReactNode, useEffect } from 'react';
 
 export const metadata: Metadata = {
-  title: "Horse Facts & Pics",
+  title: 'Horse Facts & Pics',
   description:
-    "Discover amazing horse facts with beautiful images. Learn fascinating information about these magnificent creatures!",
-  generator: "v0.dev",
+    'Discover amazing horse facts with beautiful images. Learn fascinating information about these magnificent creatures!',
+  generator: 'v0.dev',
   other: {
-    "fc:frame": JSON.stringify({
-      version: "next",
-      imageUrl: "https://v0-powerpuff-girls-ow.vercel.app/horse-banner.png",
+    'fc:frame': JSON.stringify({
+      version: 'next',
+      imageUrl: 'https://v0-powerpuff-girls-ow.vercel.app/horse-banner.png',
       button: {
-        title: "Discover Horse Facts",
+        title: 'Discover Horse Facts',
         action: {
-          type: "launch_frame",
-          name: "Horse Facts & Pics",
-          url: "https://v0-powerpuff-girls-ow.vercel.app",
-          splashImageUrl: "https://v0-powerpuff-girls-ow.vercel.app/splash.png",
-          splashBackgroundColor: "#8B4513",
+          type: 'launch_frame',
+          name: 'Horse Facts & Pics',
+          url: 'https://v0-powerpuff-girls-ow.vercel.app',
+          splashImageUrl: 'https://v0-powerpuff-girls-ow.vercel.app/splash.png',
+          splashBackgroundColor: '#8B4513',
         },
       },
     }),
@@ -33,8 +35,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "/scripts/FarcasterIntegration.js";
+    const script = document.createElement('script');
+    script.src = '/scripts/FarcasterIntegration.js';
     script.defer = true;
     script.onload = async () => {
       if (window.farcasterIntegration) {
