@@ -7,7 +7,6 @@ class FarcasterIntegration {
   }
 
   async init() {
-    // Удалена проверка window.isMiniApp!
     try {
       console.log('🔄 Initializing Farcaster integration...');
       const sdk = await this.waitForSDK();
@@ -86,7 +85,7 @@ class FarcasterIntegration {
       const result = await this.sdk.actions.sendToken({
         token: 'eip155:8453/erc20:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
         amount: amount,
-        recipientAddress: '0x956Fa79B6855a4660FCdCe28cDf96c0042E6E2AF'
+        recipientAddress: '0x7Ea45b01EECaE066f37500c92B10421937571f75'
       });
 
       if (result.success) {
