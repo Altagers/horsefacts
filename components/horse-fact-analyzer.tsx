@@ -8,6 +8,7 @@ import { HorseButton } from "./horse-button"
 import { ShareResultButton } from "./share-result-button"
 import { HorseLoversSection } from "./horse-lovers-section"
 import { FeedDucksButton } from "./feed-ducks-button"
+import { DonationButton } from "./donation-button"
 import { Heart, Brain, Search, Zap } from "lucide-react"
 
 const HorseHeaderImage = () => (
@@ -295,6 +296,22 @@ function ResultScreen({
         </div>
         <div className="absolute left-1/2 -bottom-[19px] transform -translate-x-1/2 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[20px] border-t-amber-800" />
         <div className="absolute left-1/2 -bottom-[14px] transform -translate-x-1/2 w-0 h-0 border-l-[17px] border-l-transparent border-r-[17px] border-r-transparent border-t-[17px] border-t-white" />
+      </div>
+
+      {/* Donation Section */}
+      <div className="mt-6 p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200 w-full">
+        <div className="text-center">
+          <h3 className="text-lg font-semibold text-amber-800 mb-2">
+            💝 Enjoyed this horse fact?
+          </h3>
+          <p className="text-sm text-amber-700 mb-4">
+            Support the creator to keep the stable running!
+          </p>
+          <DonationButton
+            variant="outline"
+            className="border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white"
+          />
+        </div>
       </div>
 
       <ShareResultButton horseFact={result.horseFact} onReset={onReset} />

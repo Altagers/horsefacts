@@ -3,9 +3,10 @@
 import { useEffect } from "react"
 import { useMiniKit } from "@coinbase/onchainkit/minikit"
 import { HorseFactAnalyzer } from "@/components/horse-fact-analyzer"
+import { DonationButton } from "@/components/donation-button"   // ⬅️ добавлено
 import { Sparkles } from "lucide-react"
 
-// Simple Sparkle component for background decoration
+// ----- Simple Sparkle component -----
 const BgSparkle = ({
   top,
   left,
@@ -32,7 +33,7 @@ export default function Home() {
     <div
       className="relative min-h-screen flex flex-col items-center p-4 pt-8 selection:bg-amber-300 selection:text-amber-900 overflow-hidden"
       style={{
-        background: "linear-gradient(to bottom, #D2B48C, #F5DEB3)", // Tan to wheat
+        background: "linear-gradient(to bottom, #D2B48C, #F5DEB3)", // Tan → wheat
       }}
     >
       {/* Background Sparkles */}
@@ -55,8 +56,26 @@ export default function Home() {
         <HorseFactAnalyzer />
       </div>
 
+      {/* ---- DONATION SECTION ---- */}
+      <section className="relative z-10 mt-12 w-full max-w-md">
+        <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-lg p-6 border border-amber-200 shadow-lg">
+          <div className="text-center">
+            <h3 className="text-xl font-semibold text-amber-800 mb-2">💝 Support the Creator</h3>
+            <p className="text-sm text-amber-700 mb-4">
+              Help keep the horse facts coming with Base USDC donations
+            </p>
+            <DonationButton
+              className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-semibold px-8 py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105"
+              amount="1000000"      /* 1 USDC */
+            />
+          </div>
+        </div>
+      </section>
+
       <footer className="relative z-10 mt-12 text-center">
-        <p className="font-body text-sm text-amber-800">Learn something new about these magnificent creatures!</p>
+        <p className="font-body text-sm text-amber-800">
+          Learn something new about these magnificent creatures!
+        </p>
       </footer>
     </div>
   )
