@@ -1,0 +1,69 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import farcaster from "@/lib/farcaster-integration"
+import { Coins } from "lucide-react"
+
+const DEFAULT_AMOUNT = "1000000" // 1 USDC (6 decimals)
+
+export default function DonateFarcasterButton() {
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [available, setAvailable] = useState(false)
+
+  // Observe availability once on mount
+  useEffect(() => {
+    let mounted = true
+    ;(async () => {
+      await farcaster.init()
+      if (mounted) setAvailable(farcaster.available)
+    })()
+    return () => {
+      mounted = false
+    }
+  }, [])
+
+  const handleDonate = async () => {
+    setLoading(true)
+    setError(null)
+    try {
+      const res = await farcaster.sendDonation(DEFAULT_AMOUNT)
+      if (res.success) {
+        setSuccess(true)
+        setTimeout(() => setSuccess(false), 3000)
+      } else {
+        setError(res.reason || "Donation failed")
+      }
+    } catch (err: any) {
+      setError(err?.message || "Donation failed")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (!available) return null // hide if not in Farcaster App
+
+  return (
+    <button
+      onClick={handleDonate}
+      disabled={loading}
+      className="w-full px-4 py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white western-button-text text-sm rounded-xl border-3 border-purple-700 shadow-[3px_3px_0px_0px_rgba(126,34,206,1)] hover:shadow-[5px_5px_0px_0px_rgba(126,34,206,1)] transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100"
+    >
+      {success ? (
+        <span className="flex items-center justify-center gap-2 light-text">
+          ✅ Thank you for the support!
+        </span>
+      ) : loading ? (
+        <span className="flex items-center gap-2 light-text">
+          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+          Sending donation…
+        </span>
+      ) : (
+        <span className="flex items-center gap-2 light-text">
+          <Coins className="h-4 w-4" /> Donate 1 USDC
+        </span>
+      )}
+    </button>
+  )
+}
