@@ -2,7 +2,6 @@ import type React from "react"
 import type { Metadata } from "next"
 import "./globals.css"
 import { MiniKitContextProvider } from "@/provider/minikit-provider"
-import Script from "next/script"           // ⬅️ добавлено
 
 export const metadata: Metadata = {
   title: "Horse Facts & Pics",
@@ -34,14 +33,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        {/* Farcaster SDK / интеграция донатов */}
-        <Script
-          src="/farcaster-integration.js"
-          strategy="beforeInteractive"
-        />
-      </head>
-
       <body className="font-body antialiased">
         <MiniKitContextProvider>{children}</MiniKitContextProvider>
       </body>
