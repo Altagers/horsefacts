@@ -29,12 +29,20 @@ export default function Home() {
   return (
     <>
       <main className="relative min-h-screen bg-gradient-to-br from-yellow-50 to-amber-100">
-        {/* блёстки и HorseFactAnalyzer */}
+        {/* Основной анализатор фактов */}
         <HorseFactAnalyzer />
 
-        {/* Deleted “View Horse Lovers & Supporters” button */}
+        {/* Секция Horse Lovers & Supporters */}
+        <div className="mt-6 flex justify-center">
+          <button
+            onClick={() => setShowModal(true)}
+            className="px-6 py-3 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition shadow-lg"
+          >
+            💖 Horse Lovers & Supporters 💖
+          </button>
+        </div>
 
-        {/* Перенёс блок Donate сюда: */}
+        {/* === Блок Donate (перенесён сюда) === */}
         <div className="mt-6 flex flex-col items-center bg-white/90 backdrop-blur-sm p-4 rounded-2xl border border-gray-200 shadow-md w-full max-w-sm mx-auto">
           <p className="font-semibold mb-2">💖 Support HorseFacts 💖</p>
           <button
@@ -56,15 +64,7 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Футер */}
-        <div className="mt-8 text-center text-gray-600 text-sm">
-          Made by @altagers.eth with @sohey help • Powered by MiniKit
-        </div>
       </main>
-
-      {/* Модальное окно со списком Horse Lovers */}
-      {showModal && (
-        <HorseLoversSection isOpen={showModal} onClose={() => setShowModal(false)} />
       )}
     </>
   )
