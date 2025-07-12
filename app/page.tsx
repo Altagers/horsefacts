@@ -3,7 +3,6 @@
 import { useEffect } from "react"
 import { useMiniKit } from "@coinbase/onchainkit/minikit"
 import { HorseFactAnalyzer } from "@/components/horse-fact-analyzer"
-import DonateFarcasterButton from "@/components/donate-farcaster-button"
 import { Sparkles } from "lucide-react"
 
 // Simple Sparkle component for background decoration
@@ -54,11 +53,6 @@ export default function Home() {
       {/* Main horse fact analyzer component */}
       <div className="relative z-10">
         <HorseFactAnalyzer />
-
-        {/* Donation button visible only inside Farcaster Mini App */}
-        <div className="mt-6">
-          <DonateFarcasterButton />
-        </div>
       </div>
 
       <footer className="relative z-10 mt-12 text-center">
