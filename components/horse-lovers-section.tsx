@@ -1,7 +1,7 @@
 "use client"
 
-import { Heart, X, Copy } from "lucide-react"
-import React, { useState } from "react"
+import { Heart, X } from "lucide-react"
+import React from "react"
 
 interface HorseLoversProps {
   isOpen: boolean
@@ -9,20 +9,7 @@ interface HorseLoversProps {
 }
 
 export function HorseLoversSection({ isOpen, onClose }: HorseLoversProps) {
-  const walletAddress = "0x956Fa79B6855a4660FCdCe28cDf96c0042E6E2AF"
-  const [copied, setCopied] = useState(false)
-
   if (!isOpen) return null
-
-  const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(walletAddress)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    } catch {
-      alert("Copy failed, please copy manually.")
-    }
-  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/50 p-4 overflow-auto">
@@ -46,16 +33,24 @@ export function HorseLoversSection({ isOpen, onClose }: HorseLoversProps) {
           <div className="mt-2 text-3xl animate-bounce">💖💕💗💝💘</div>
         </div>
 
-        {/* Existing content preserved */}
+        {/* Существующий контент: ссылки и цитата */}
         <div className="space-y-4">
           <div className="bg-red-50 p-4 rounded-xl border border-red-200">
             <div className="space-y-3">
-              <a href="https://farcaster.xyz/horsefacts.eth" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://farcaster.xyz/horsefacts.eth"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <button className="w-full py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition">
                   🐎 @horsefacts.eth 💕
                 </button>
               </a>
-              <a href="https://farcaster.xyz/105108121" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://farcaster.xyz/105108121"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <button className="w-full py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition">
                   🦄 @105108121 💖
                 </button>
@@ -68,25 +63,6 @@ export function HorseLoversSection({ isOpen, onClose }: HorseLoversProps) {
             <p className="italic font-semibold mt-2">"Spreading horse love across Farcaster! 🌟"</p>
             <div className="text-xl mt-1 animate-bounce">❤️🧡💛💚💙💜</div>
           </div>
-        </div>
-
-        {/* Donate CTA */}
-        <div className="bg-red-50 p-4 rounded-xl border border-red-200 text-center space-y-3">
-          <p className="font-semibold mb-1">💖 Thank you for supporting HorseFacts! 💖</p>
-          <button
-            onClick={copyToClipboard}
-            className="w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2"
-          >
-            Donate (copies address)
-          </button>
-          <div
-            onClick={copyToClipboard}
-            className="mx-auto inline-flex items-center gap-1 cursor-pointer bg-white px-3 py-1 rounded-lg border border-gray-300 select-all"
-          >
-            <code className="font-mono text-sm break-all">{walletAddress}</code>
-            <Copy className="w-4 h-4 text-gray-600 hover:text-gray-800" />
-          </div>
-          {copied && <p className="text-green-600 text-sm">Address copied!</p>}
         </div>
       </div>
     </div>

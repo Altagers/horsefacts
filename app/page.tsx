@@ -1,26 +1,16 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useMiniKit } from "@coinbase/onchainkit/minikit"
 import { HorseFactAnalyzer } from "@/components/horse-fact-analyzer"
-import { Sparkles } from "lucide-react"
-
-// Simple Sparkle component for background decoration
-const BgSparkle = ({
-  top,
-  left,
-  size = "w-8 h-8",
-  rotate = "0",
-  delay = "0s",
-}: { top: string; left: string; size?: string; rotate?: string; delay?: string }) => (
-  <Sparkles
-    className={`absolute text-amber-200/40 ${size} transform rotate-${rotate} animate-pulse`}
-    style={{ top, left, animationDelay: delay }}
-  />
-)
+import { HorseLoversSection } from "@/components/horse-lovers-section"
+import { Copy } from "lucide-react"
 
 export default function Home() {
   const { setFrameReady, isFrameReady } = useMiniKit()
+  const walletAddress = "0x956Fa79B6855a4660FCdCe28cDf96c0042E6E2AF"
+  const [copied, setCopied] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     if (!isFrameReady) {
@@ -28,36 +18,61 @@ export default function Home() {
     }
   }, [setFrameReady, isFrameReady])
 
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(walletAddress)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      alert("Copy failed, please copy manually.")
+    }
+  }
+
   return (
-    <div
-      className="relative min-h-screen flex flex-col items-center p-4 pt-8 selection:bg-amber-300 selection:text-amber-900 overflow-hidden"
-      style={{
-        background: "linear-gradient(to bottom, #D2B48C, #F5DEB3)", // Tan to wheat
-      }}
-    >
-      {/* Background Sparkles */}
-      <BgSparkle top="10%" left="15%" size="w-12 h-12" rotate="12" delay="0.2s" />
-      <BgSparkle top="20%" left="80%" size="w-10 h-10" rotate="-15" delay="0.5s" />
-      <BgSparkle top="60%" left="5%" size="w-16 h-16" rotate="5" delay="0.8s" />
-      <BgSparkle top="75%" left="90%" size="w-14 h-14" rotate="-5" delay="0.3s" />
-      <BgSparkle top="40%" left="45%" size="w-8 h-8" rotate="20" delay="0.6s" />
-
-      {/* Themed Header */}
-      <header className="relative z-10 w-full max-w-xl mb-8 flex flex-col sm:flex-row justify-between items-center gap-4 p-6 bg-amber-100 border-[4px] border-amber-800 rounded-3xl shadow-[6px_6px_0px_0px_rgba(133,77,14,1)]">
-        <div className="text-center sm:text-left">
-          <h1 className="ranch-heading text-4xl text-amber-900 leading-tight">Horse Facts & Pics</h1>
-          <p className="font-body text-lg text-amber-700 font-medium">Discover amazing horse facts!</p>
-        </div>
-      </header>
-
-      {/* Main horse fact analyzer component */}
-      <div className="relative z-10">
+    <>
+      {/* Фоновые блестки, заголовок и основной анализатор */}
+      <main className="relative min-h-screen bg-gradient-to-br from-yellow-50 to-amber-100">
+        {/* ...существующий код блёсток и HorseFactAnalyzer */}
         <HorseFactAnalyzer />
+      </main>
+
+      {/* Donate CTA */}
+      <div className="fixed bottom-6 right-6 z-50 bg-white/90 backdrop-blur-sm p-4 rounded-2xl border border-gray-200 shadow-lg max-w-xs text-center">
+        <p className="font-semibold mb-2">
+          💖 Support HorseFacts 💖
+        </p>
+        <button
+          onClick={copyToClipboard}
+          className="w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2 mb-2"
+        >
+          Donate (copies address)
+        </button>
+        <div
+          onClick={copyToClipboard}
+          className="mx-auto inline-flex items-center gap-1 cursor-pointer bg-gray-100 px-2 py-1 rounded-lg border border-gray-300 select-all"
+        >
+          <code className="font-mono text-sm break-all">{walletAddress}</code>
+          <Copy className="w-4 h-4 text-gray-600 hover:text-gray-800" />
+        </div>
+        {copied && <p className="text-green-600 text-sm mt-1">Address copied!</p>}
+        <p className="text-xs text-gray-500 mt-2 italic">
+          Your name will be immortalized in the “Horse Lovers” list!
+        </p>
+        <button
+          onClick={() => setShowModal(true)}
+          className="mt-2 text-sm text-blue-600 hover:underline"
+        >
+          View Horse Lovers List
+        </button>
       </div>
 
-      <footer className="relative z-10 mt-12 text-center">
-        <p className="font-body text-sm text-amber-800">Learn something new about these magnificent creatures!</p>
-      </footer>
-    </div>
+      {/* Модальное окно с HorseLoversSection */}
+      {showModal && (
+        <HorseLoversSection
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+        />
+      )}
+    </>
   )
 }
