@@ -13,9 +13,7 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
-    if (!isFrameReady) {
-      setFrameReady()
-    }
+    if (!isFrameReady) setFrameReady()
   }, [setFrameReady, isFrameReady])
 
   const copyToClipboard = async () => {
@@ -31,21 +29,13 @@ export default function Home() {
   return (
     <>
       <main className="relative min-h-screen bg-gradient-to-br from-yellow-50 to-amber-100">
-        {/* Блёстки и анализатор */}
+        {/* блёстки и HorseFactAnalyzer */}
         <HorseFactAnalyzer />
 
-        {/* Horse Lovers & Supporters button */}
-        <div className="mt-6 flex flex-col items-center">
-          <button
-            onClick={() => setShowModal(true)}
-            className="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition"
-          >
-            View Horse Lovers & Supporters
-          </button>
-        </div>
+        {/* Deleted “View Horse Lovers & Supporters” button */}
 
-        {/* Donate CTA */}
-        <div className="mt-4 flex flex-col items-center bg-white/90 backdrop-blur-sm p-4 rounded-2xl border border-gray-200 shadow-md w-full max-w-sm mx-auto">
+        {/* Перенёс блок Donate сюда: */}
+        <div className="mt-6 flex flex-col items-center bg-white/90 backdrop-blur-sm p-4 rounded-2xl border border-gray-200 shadow-md w-full max-w-sm mx-auto">
           <p className="font-semibold mb-2">💖 Support HorseFacts 💖</p>
           <button
             onClick={copyToClipboard}
@@ -65,7 +55,16 @@ export default function Home() {
             Your name will be immortalized in the “Horse Lovers” list!
           </p>
         </div>
+
+        {/* Футер */}
+        <div className="mt-8 text-center text-gray-600 text-sm">
+          Made by @altagers.eth with @sohey help • Powered by MiniKit
+        </div>
       </main>
+
+      {/* Модальное окно со списком Horse Lovers */}
+      {showModal && (
+        <HorseLoversSection isOpen={showModal} onClose={() => setShowModal(false)} />
       )}
     </>
   )
