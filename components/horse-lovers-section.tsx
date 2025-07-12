@@ -23,7 +23,7 @@ export function HorseLoversSection({ isOpen, onClose }: HorseLoversProps) {
           <X className="w-5 h-5 text-red-600" />
         </button>
 
-        {/* Header */}
+        {/* Заголовок */}
         <div className="text-center">
           <h2 className="text-2xl font-extrabold text-red-700 flex items-center justify-center gap-2">
             <Heart className="w-6 h-6 text-red-500 animate-pulse" />
@@ -33,31 +33,22 @@ export function HorseLoversSection({ isOpen, onClose }: HorseLoversProps) {
           <div className="mt-2 text-3xl animate-bounce">💖💕💗💝💘</div>
         </div>
 
-        {/* Существующий контент: ссылки и цитата */}
+        {/* Существующий контент: Farcaster-кнопки и цитата */}
         <div className="space-y-4">
           <div className="bg-red-50 p-4 rounded-xl border border-red-200">
             <div className="space-y-3">
-              <a
-                href="https://farcaster.xyz/horsefacts.eth"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="https://farcaster.xyz/horsefacts.eth" target="_blank" rel="noopener noreferrer">
                 <button className="w-full py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition">
                   🐎 @horsefacts.eth 💕
                 </button>
               </a>
-              <a
-                href="https://farcaster.xyz/105108121"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="https://farcaster.xyz/105108121" target="_blank" rel="noopener noreferrer">
                 <button className="w-full py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition">
                   🦄 @105108121 💖
                 </button>
               </a>
             </div>
           </div>
-
           <div className="text-center bg-red-100 p-3 rounded-xl border border-red-200">
             <div className="text-xl animate-pulse">💝💗💕💖💘</div>
             <p className="italic font-semibold mt-2">"Spreading horse love across Farcaster! 🌟"</p>
