@@ -66,10 +66,6 @@ export default function Home() {
           </p>
         </div>
       </main>
-
-      {/* Modal: Horse Lovers list */}
-      {showModal && (
-        <HorseLoversSection isOpen={showModal} onClose={() => setShowModal(false)} />
       )}
     </>
   )
