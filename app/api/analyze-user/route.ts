@@ -3,17 +3,54 @@ import { selectBestHorseFact } from "@/lib/word-matching"
 
 const NEYNAR_API_KEY = process.env.NEYNAR_API_KEY
 
-interface NeynarCast {
-  text: string
-  timestamp: string
-  author: {
-    username: string
-    display_name: string
-  }
+if (!NEYNAR_API_KEY) {
+  console.error("NEYNAR_API_KEY is not set")
 }
 
-interface NeynarResponse {
-  casts: NeynarCast[]
+async function fetchUserCasts(fid: number): Promise<{ casts: string[]; userName: string }> {
+  if (!NEYNAR_API_KEY) {
+    throw new Error("Neynar API key not configured")
+  }
+
+  try {
+    console.log(`Fetching casts for FID: ${fid}`)
+
+    const response = await fetch(
+      `https://api.neynar.com/v2/farcaster/casts?fid=${fid}&limit=10&include_replies=false`,
+      {
+        headers: {
+          Accept: "application/json",
+          api_key: NEYNAR_API_KEY,
+        },
+      },
+    )
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error(`Neynar API error: ${response.status} - ${errorText}`)
+      throw new Error(`Failed to fetch casts: ${response.status}`)
+    }
+
+    const data = await response.json()
+    console.log(`Neynar API response:`, JSON.stringify(data, null, 2))
+
+    if (!data.casts || !Array.isArray(data.casts)) {
+      console.log("No casts found in response")
+      return { casts: [], userName: "unknown" }
+    }
+
+    const casts = data.casts.map((cast: any) => cast.text).filter((text: string) => text && text.trim().length > 0)
+
+    const userName = data.casts[0]?.author?.username || "unknown"
+
+    console.log(`Found ${casts.length} casts for user ${userName}`)
+    console.log("Cast texts:", casts)
+
+    return { casts, userName }
+  } catch (error) {
+    console.error("Error fetching user casts:", error)
+    throw error
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -24,61 +61,34 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "FID is required" }, { status: 400 })
     }
 
-    if (!NEYNAR_API_KEY) {
-      console.error("❌ NEYNAR_API_KEY is not configured")
-      return NextResponse.json({ error: "API configuration error" }, { status: 500 })
-    }
+    console.log(`API: Analyzing casts for FID: ${fid}`)
 
-    console.log(`🔍 Backend: Fetching casts for FID: ${fid}`)
+    // Fetch user's recent casts
+    const { casts: userCasts, userName } = await fetchUserCasts(fid)
 
-    // Fetch user's recent casts from Neynar API
-    const neynarUrl = `https://api.neynar.com/v2/farcaster/casts?fid=${fid}&limit=10`
-
-    const response = await fetch(neynarUrl, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        api_key: NEYNAR_API_KEY,
-      },
-    })
-
-    if (!response.ok) {
-      console.error(`❌ Neynar API error: ${response.status} ${response.statusText}`)
-      const errorText = await response.text()
-      console.error("Error details:", errorText)
-      return NextResponse.json({ error: "Failed to fetch user casts" }, { status: 500 })
-    }
-
-    const data: NeynarResponse = await response.json()
-    console.log(`📊 Backend: Retrieved ${data.casts?.length || 0} casts`)
-
-    // Extract cast text for analysis
-    const userCasts: string[] = data.casts?.map((cast) => cast.text) || []
-    const userName = data.casts?.[0]?.author?.username || data.casts?.[0]?.author?.display_name || "Unknown"
-
-    console.log(`📝 Backend: Analyzing ${userCasts.length} casts for user: ${userName}`)
-    console.log("Cast texts:", userCasts.slice(0, 3)) // Log first 3 for debugging
-
-    // Use word matching to select the best horse fact
-    const horseFact = selectBestHorseFact(userCasts)
-
-    // Determine analysis method
-    const method = userCasts.length > 0 ? "keyword-analysis" : "random"
+    // Select the best matching horse fact
+    const { fact: horseFact, method } = selectBestHorseFact(userCasts)
 
     const result = {
       horseFact,
-      message: `Here's your personalized horse fact based on your recent casts!`,
+      message:
+        method === "keyword-analysis"
+          ? `Based on your recent casts, here's a horse fact that matches your interests!`
+          : `Here's a random horse fact for you!`,
       analysis: {
         castsAnalyzed: userCasts.length,
-        userName: userName,
-        method: method,
+        userName,
+        method,
       },
     }
 
-    console.log(`✅ Backend: Returning fact #${horseFact.id} via ${method} method`)
+    console.log(`API: Returning result:`, result)
     return NextResponse.json(result)
   } catch (error) {
-    console.error("❌ Backend error:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    console.error("API Error:", error)
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Failed to analyze casts" },
+      { status: 500 },
+    )
   }
 }
